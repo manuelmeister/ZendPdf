@@ -110,6 +110,6 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
         $intObj  = new InternalType\NumericObject(100);
         $obj     = new InternalType\IndirectObject($intObj, 55, 3, $factory);
 
-        $this->assertEquals($obj->dump($factory), "55 3 obj \n100\nendobj\n");
+        $this->assertEquals($obj->dump($factory), "55 3 obj\n100\nendobj\n");
     }
 }

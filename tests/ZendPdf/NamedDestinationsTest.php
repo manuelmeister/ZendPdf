@@ -74,11 +74,11 @@ class NamedDestinationsTest extends \PHPUnit_Framework_TestCase
 
         $pdf->setNamedDestination('Page1',   $destination1);
         $pdf->setNamedDestination('Page1_1', Destination\Fit::create(1));
-        $pdf->setNamedDestination('Page9_1', Destination\Fit::create(9)); // will be egnored
+        $pdf->setNamedDestination('Page9_1', Destination\Fit::create(9)); // will be ignored
 
         $action3 = Action\GoToAction::create(Destination\Fit::create($page3));
         $pdf->setNamedDestination('GoToPage3', $action3);
 
-        $this->assertTrue(strpos($pdf->render(), '[(GoToPage1) <</Type /Action /S /GoTo /D [3 0 R /Fit ] >> (Page1) [3 0 R /Fit ] (Page1_1) [1 /Fit ] (Page2) [4 0 R /Fit ] ]') !== false);
+        $this->assertTrue(strpos($pdf->render(), '[(GoToPage1) <</Type /Action /S /GoTo /D [4 0 R /Fit ] >> (Page1) [4 0 R /Fit ] (Page1_1) [1 /Fit ] (Page2) [5 0 R /Fit ] ]') !== false);
     }
 }

@@ -336,7 +336,7 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         $action->dumpAction(new ObjectFactory(1));
 
         $this->assertEquals($action->getResource()->toString(),
-                            '<</Type /Action /S /GoTo /D [4 0 R /Fit ] >>');
+                            '<</Type /Action /S /GoTo /D [5 0 R /Fit ] >>');
     }
 
     public function testGetDestination()

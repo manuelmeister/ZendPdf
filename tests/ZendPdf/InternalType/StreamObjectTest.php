@@ -46,6 +46,6 @@ class StreamObjectTest extends \PHPUnit_Framework_TestCase
         $factory = new ObjectFactory(1);
 
         $obj = new InternalType\StreamObject('some data', 55, 3, $factory);
-        $this->assertEquals($obj->dump($factory), "55 3 obj \n<</Length 9 >>\nstream\nsome data\nendstream\nendobj\n");
+        $this->assertEquals($obj->dump($factory), "55 3 obj\n<</Length 9 >>\nstream\nsome data\nendstream\nendobj\n");
     }
 }

@@ -68,7 +68,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
         $destination = Destination\AbstractDestination::load($destArray);
 
         $this->assertTrue($destination instanceof Destination\Zoom);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /XYZ 0 842 1 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /XYZ 0 842 1 ]');
 
 
         // \ZendPdf\Destination\Fit
@@ -79,7 +79,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
         $destination = Destination\AbstractDestination::load($destArray);
 
         $this->assertTrue($destination instanceof Destination\Fit);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /Fit ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /Fit ]');
 
 
         // \ZendPdf\Destination\FitHorizontally
@@ -91,7 +91,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
         $destination = Destination\AbstractDestination::load($destArray);
 
         $this->assertTrue($destination instanceof Destination\FitHorizontally);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitH 842 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitH 842 ]');
 
 
         // \ZendPdf\Destination\FitVertically
@@ -103,7 +103,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
         $destination = Destination\AbstractDestination::load($destArray);
 
         $this->assertTrue($destination instanceof Destination\FitVertically);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitV 0 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitV 0 ]');
 
 
         // \ZendPdf\Destination\FitRectangle
@@ -118,7 +118,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
         $destination = Destination\AbstractDestination::load($destArray);
 
         $this->assertTrue($destination instanceof Destination\FitRectangle);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitR 0 10 595 842 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitR 0 10 595 842 ]');
 
 
         // \ZendPdf\Destination\FitBoundingBox
@@ -129,7 +129,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
         $destination = Destination\AbstractDestination::load($destArray);
 
         $this->assertTrue($destination instanceof Destination\FitBoundingBox);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitB ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitB ]');
 
 
         // \ZendPdf\Destination\FitBoundingBoxHorizontally
@@ -141,7 +141,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
         $destination = Destination\AbstractDestination::load($destArray);
 
         $this->assertTrue($destination instanceof Destination\FitBoundingBoxHorizontally);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitBH 842 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitBH 842 ]');
 
 
         // \ZendPdf\Destination\FitBoundingBoxVertically
@@ -153,7 +153,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
         $destination = Destination\AbstractDestination::load($destArray);
 
         $this->assertTrue($destination instanceof Destination\FitBoundingBoxVertically);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitBV 0 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitBV 0 ]');
     }
 
     public function testGettersSetters()
@@ -274,15 +274,15 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
 
         $destination = Destination\Zoom::create($page2, 0, 842, 0.5);
         $this->assertTrue($destination instanceof Destination\Zoom);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /XYZ 0 842 0.5 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /XYZ 0 842 0.5 ]');
 
         $destination = Destination\Fit::create($page2);
         $this->assertTrue($destination instanceof Destination\Fit);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /Fit ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /Fit ]');
 
         $destination = Destination\FitHorizontally::create($page2, 842);
         $this->assertTrue($destination instanceof Destination\FitHorizontally);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitH 842 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitH 842 ]');
 
         $destination = Destination\FitVertically::create(2, 0);
         $this->assertTrue($destination instanceof Destination\FitVertically);
@@ -290,7 +290,7 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
 
         $destination = Destination\FitRectangle::create($page1, 0, 10, 595, 842);
         $this->assertTrue($destination instanceof Destination\FitRectangle);
-        $this->assertEquals($destination->getResource()->toString(), '[3 0 R /FitR 0 10 595 842 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitR 0 10 595 842 ]');
 
         $destination = Destination\FitBoundingBox::create(1);
         $this->assertTrue($destination instanceof Destination\FitBoundingBox);
@@ -298,10 +298,10 @@ class DestinationTest extends \PHPUnit_Framework_TestCase
 
         $destination = Destination\FitBoundingBoxHorizontally::create($page2, 842);
         $this->assertTrue($destination instanceof Destination\FitBoundingBoxHorizontally);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitBH 842 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitBH 842 ]');
 
         $destination = Destination\FitBoundingBoxVertically::create($page2, 0);
         $this->assertTrue($destination instanceof Destination\FitBoundingBoxVertically);
-        $this->assertEquals($destination->getResource()->toString(), '[4 0 R /FitBV 0 ]');
+        $this->assertEquals($destination->getResource()->toString(), '[5 0 R /FitBV 0 ]');
     }
 }
