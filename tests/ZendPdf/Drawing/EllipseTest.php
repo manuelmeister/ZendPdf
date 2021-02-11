@@ -42,6 +42,6 @@ class EllipseTest extends \PHPUnit_Framework_TestCase
         $ellipse3->setPosition(250, 400);
         $actualContent .= $ellipse3->draw($page);
 
-        $this->assertStringEqualsFile('EllipseTestContent.txt', $actualContent);
+        $this->assertStringEqualsFile(__DIR__ .'/EllipseTestContent.txt', $actualContent);
     }
 }
