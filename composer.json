@@ -1,5 +1,5 @@
 {
-    "name": "metaworx/zendpdf",
+    "name": "mentax/zendpdf",
     "description": "Zend Pdf Component",
     "type": "library",
     "license": "BSD-3-Clause",
@@ -16,7 +16,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/metaworx/ZendPdf.git"
+            "url": "https://github.com/mentax/ZendPdf.git"
         }
     ],
     "require": {
