@@ -8,7 +8,7 @@
  * @package   Zend_Pdf
  */
 
-namespace ZendPdfTest\InternalType\Object;
+namespace ZendPdfTest\InternalType\ZendObject;
 
 use ZendPdf\InternalType;
 use ZendPdf\ObjectFactory;

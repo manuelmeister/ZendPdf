@@ -530,7 +530,7 @@ abstract class AbstractOpenType extends Pdf\BinaryParser\Font\AbstractFont
          * We can understand all four of these table versions.
          */
         $tableVersion = $this->readUInt(2);
-        if (($tableVersion < 0) || ($tableVersion > 4)) {
+        if (($tableVersion < 0) || ($tableVersion > 3)) {
             throw new Exception\CorruptedFontException("Unable to read version $tableVersion table");
         }
         $this->_debugLog('Version %d table', $tableVersion);
@@ -858,7 +858,7 @@ abstract class AbstractOpenType extends Pdf\BinaryParser\Font\AbstractFont
                     if ($language != 0) {
                         $this->_debugLog('Type 0 cmap tables must be language-independent;'
                                          . ' language: %d; skipping', $language);
-                        continue 2;
+                        break;
                     }
                     break;
 
@@ -877,7 +877,7 @@ abstract class AbstractOpenType extends Pdf\BinaryParser\Font\AbstractFont
                 case 0xa:    // break intentionally omitted
                 case 0xc:
                     $this->_debugLog('Format: 0x%x currently unsupported; skipping', $format);
-                    continue 2;
+                    break;
                     //$this->skipBytes(2);
                     //$cmapLength = $this->readUInt(4);
                     //$language = $this->readUInt(4);
@@ -889,7 +889,7 @@ abstract class AbstractOpenType extends Pdf\BinaryParser\Font\AbstractFont
 
                 default:
                     $this->_debugLog('Unknown subtable format: 0x%x; skipping', $format);
-                    continue 2;
+                    break;
             }
             $cmapType = $format;
             break;

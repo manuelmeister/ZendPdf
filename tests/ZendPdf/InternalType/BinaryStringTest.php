@@ -8,7 +8,7 @@
  * @package   Zend_Pdf
  */
 
-namespace ZendPdfTest\InternalType\String;
+namespace ZendPdfTest\InternalType\ZendString;
 
 use ZendPdf\InternalType;
 
