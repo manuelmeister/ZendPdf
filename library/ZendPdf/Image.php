@@ -152,12 +152,11 @@ abstract class Image
 
         if ($image !== null) {
             return $image;
-
         } else {
             /* The type of image could not be determined. Give up.
              */
             throw new Exception\DomainException("Cannot determine image type: $filePath");
-         }
+        }
     }
 
 

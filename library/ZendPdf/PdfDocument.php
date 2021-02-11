@@ -164,7 +164,7 @@ class PdfDocument
     
     /**
      * An object that represents the AcroForm
-     * 
+     *
      * @return AcroFormObject
      */
     public function getForm()
@@ -248,8 +248,8 @@ class PdfDocument
      */
     public function save($filename, $updateOnly = false)
     {
-        if (($file = @fopen($filename, $updateOnly ? 'ab':'wb')) === false ) {
-            throw new Exception\IOException( "Can not open '$filename' file for writing." );
+        if (($file = @fopen($filename, $updateOnly ? 'ab':'wb')) === false) {
+            throw new Exception\IOException("Can not open '$filename' file for writing.");
         }
 
         $this->render($updateOnly, $file);
@@ -335,7 +335,7 @@ class PdfDocument
              * Document id
              */
             $docId = md5(uniqid(rand(), true));   // 32 byte (128 bit) identifier
-            $docIdLow  = substr($docId,  0, 16);  // first 16 bytes
+            $docIdLow  = substr($docId, 0, 16);  // first 16 bytes
             $docIdHigh = substr($docId, 16, 16);  // second 16 bytes
 
             $trailerDictionary->ID = new InternalType\ArrayObject();
@@ -378,24 +378,22 @@ class PdfDocument
      */
     protected function _loadFormFields(IndirectObjectReference $root)
     {
-      if ($root->AcroForm === null || $root->AcroForm->Fields === null) {
-        return;
-      }
+        if ($root->AcroForm === null || $root->AcroForm->Fields === null) {
+            return;
+        }
       
-      foreach ($root->AcroForm->Fields->items as $field)
-      {
-          if ( $field->FT->value == 'Tx' && $field->T !== null ) /* We only support fields that are textfields and have a name */
+        foreach ($root->AcroForm->Fields->items as $field) {
+            if ($field->FT->value == 'Tx' && $field->T !== null) /* We only support fields that are textfields and have a name */
           {
             $this->_formFields[$field->T->value] = $field;
           }
-      }
+        }
       
-      if ( !$root->AcroForm->NeedAppearances || !$root->AcroForm->NeedAppearances->value )
-      {
-        /* Ask the .pdf viewer to generate its own appearance data, so we do not have to */
-        $root->AcroForm->add(new InternalType\NameObject('NeedAppearances'), new InternalType\BooleanObject(true) );
-        //$root->AcroForm->touch();
-      }
+        if (!$root->AcroForm->NeedAppearances || !$root->AcroForm->NeedAppearances->value) {
+            /* Ask the .pdf viewer to generate its own appearance data, so we do not have to */
+            $root->AcroForm->add(new InternalType\NameObject('NeedAppearances'), new InternalType\BooleanObject(true));
+            //$root->AcroForm->touch();
+        }
     }
     
     /**
@@ -405,7 +403,7 @@ class PdfDocument
      */
     public function getTextFieldNames()
     {
-      return array_keys($this->_formFields);
+        return array_keys($this->_formFields);
     }
     
     /**
@@ -417,14 +415,15 @@ class PdfDocument
      */
     public function setTextField($name, $value)
     {
-
-      if ( !isset($this->_formFields[$name]))
-        throw new \Exception("Field '$name' does not exist or is not a textfield");
+        if (!isset($this->_formFields[$name])) {
+            throw new \Exception("Field '$name' does not exist or is not a textfield");
+        }
       
-      $field = $this->_formFields[$name];
-      $stringObj = new InternalType\StringObject($value);
-      $field->add(new InternalType\NameObject('V'), $stringObj);;
-      $field->touch();      
+        $field = $this->_formFields[$name];
+        $stringObj = new InternalType\StringObject($value);
+        $field->add(new InternalType\NameObject('V'), $stringObj);
+        ;
+        $field->touch();
     }
 
     /**
@@ -437,7 +436,7 @@ class PdfDocument
         $revisions = 1;
         $currentTrailer = $this->_trailer;
 
-        while ($currentTrailer->getPrev() !== null && $currentTrailer->getPrev()->Root !== null ) {
+        while ($currentTrailer->getPrev() !== null && $currentTrailer->getPrev()->Root !== null) {
             $revisions++;
             $currentTrailer = $currentTrailer->getPrev();
         }
@@ -527,7 +526,7 @@ class PdfDocument
     protected function _loadNamedDestinations(InternalType\IndirectObjectReference $root, $pdfHeaderVersion)
     {
         if ($root->Version !== null  &&  version_compare($root->Version->value, $pdfHeaderVersion, '>')) {
-            $versionIs_1_2_plus = version_compare($root->Version->value,    '1.1', '>');
+            $versionIs_1_2_plus = version_compare($root->Version->value, '1.1', '>');
         } else {
             $versionIs_1_2_plus = version_compare($pdfHeaderVersion, '1.1', '>');
         }
@@ -620,7 +619,7 @@ class PdfDocument
             /*
              * Either of these clone methods will make a page available for use in another doc however
              * $page->clonePage() will let us reduce the total number of object factories in play.
-             */ 
+             */
             $newpage = $page->clonePage($objFactory, $processed);
             $this->pages[] = $newpage;
         }
@@ -667,7 +666,7 @@ class PdfDocument
         $pagesContainer->touch();
         $pagesContainer->Kids->items = array();
 
-        foreach ($this->pages as $page ) {
+        foreach ($this->pages as $page) {
             $page->render($this->_objFactory);
 
             $pageDictionary = $page->getPageDictionary();
@@ -798,7 +797,7 @@ class PdfDocument
             if (count($this->_originalOutlines) != count($this->outlines)) {
                 // If original and current outlines arrays have different size then outlines list was updated
                 $updateOutlinesNavigation = true;
-            } elseif ( !(array_keys($this->_originalOutlines) === array_keys($this->outlines)) ) {
+            } elseif (!(array_keys($this->_originalOutlines) === array_keys($this->outlines))) {
                 // If original and current outlines arrays have different keys (with a glance to an order) then outlines list was updated
                 $updateOutlinesNavigation = true;
             } else {
@@ -949,7 +948,7 @@ class PdfDocument
         } else {
             $root->OpenAction = $openAction->getResource();
 
-            if ($openAction instanceof Action\AbstractAction)  {
+            if ($openAction instanceof Action\AbstractAction) {
                 $openAction->dumpAction($this->_objFactory);
             }
         }
@@ -984,13 +983,13 @@ class PdfDocument
         }
     }
 
-	/**
-	 * Set specified named destination
-	 *
-	 * @param string                                                                           $name
-	 * @param \ZendPdf\Destination\AbstractExplicitDestination|\ZendPdf\Action\GoToAction|null $destination
-	 * @throws \ZendPdf\Exception\ExceptionInterface
-	 */
+    /**
+     * Set specified named destination
+     *
+     * @param string                                                                           $name
+     * @param \ZendPdf\Destination\AbstractExplicitDestination|\ZendPdf\Action\GoToAction|null $destination
+     * @throws \ZendPdf\Exception\ExceptionInterface
+     */
     public function setNamedDestination($name, $destination = null)
     {
         if ($destination !== null  &&
@@ -1000,7 +999,7 @@ class PdfDocument
         }
 
         if ($destination !== null) {
-           $this->_namedTargets[$name] = $destination;
+            $this->_namedTargets[$name] = $destination;
         } else {
             unset($this->_namedTargets[$name]);
         }
@@ -1048,10 +1047,10 @@ class PdfDocument
      *
      * @param \ZendPdf\Destination\AbstractDestination $destination  Destination to resolve
      * @param boolean $refreshPageCollectionHashes Refresh page collection hashes before processing
-	 * @return \ZendPdf\Page|null
+     * @return \ZendPdf\Page|null
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-	public function resolveDestination(Destination\AbstractDestination $destination, $refreshPageCollectionHashes = true)
+    public function resolveDestination(Destination\AbstractDestination $destination, $refreshPageCollectionHashes = true)
     {
         if ($this->_pageReferences === null  ||  $refreshPageCollectionHashes) {
             $this->_refreshPagesHash();
@@ -1105,7 +1104,7 @@ class PdfDocument
      *
      * @param \ZendPdf\Action\AbstractAction $action
      * @param boolean $refreshPageCollectionHashes Refresh page collection hashes before processing
-	 * @return \ZendPdf\Action\AbstractAction|null
+     * @return \ZendPdf\Action\AbstractAction|null
      */
     protected function _cleanUpAction(Action\AbstractAction $action, $refreshPageCollectionHashes = true)
     {
@@ -1166,7 +1165,7 @@ class PdfDocument
                 $fontDictionary = $fontResources->$fontResourceName;
 
                 if (! ($fontDictionary instanceof InternalType\IndirectObjectReference  ||
-                       $fontDictionary instanceof InternalType\IndirectObject) ) {
+                       $fontDictionary instanceof InternalType\IndirectObject)) {
                     throw new Exception\CorruptedPdfException('Font dictionary has to be an indirect object or object reference.');
                 }
 
@@ -1197,7 +1196,7 @@ class PdfDocument
      * $fontName should be specified in UTF-8 encoding
      *
      * @param \ZendPdf\Resource\Font\AbstractFont $fontName
-	 * @return \ZendPdf\Resource\Font\Extracted|null
+     * @return \ZendPdf\Resource\Font\Extracted|null
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
     public function extractFont($fontName)
@@ -1217,7 +1216,7 @@ class PdfDocument
                 $fontDictionary = $fontResources->$fontResourceName;
 
                 if (! ($fontDictionary instanceof InternalType\IndirectObjectReference  ||
-                       $fontDictionary instanceof InternalType\IndirectObject) ) {
+                       $fontDictionary instanceof InternalType\IndirectObject)) {
                     throw new Exception\CorruptedPdfException('Font dictionary has to be an indirect object or object reference.');
                 }
 
@@ -1340,7 +1339,7 @@ class PdfDocument
                 return $this->_trailer->getPDFString();
             } else {
                 $pdfData = $this->_trailer->getPDFString();
-                while ( strlen($pdfData) > 0 && ($byteCount = fwrite($outputStream, $pdfData)) != false ) {
+                while (strlen($pdfData) > 0 && ($byteCount = fwrite($outputStream, $pdfData)) != false) {
                     $pdfData = substr($pdfData, $byteCount);
                 }
 
@@ -1371,7 +1370,7 @@ class PdfDocument
         if ($outputStream !== null) {
             if (!$newSegmentOnly) {
                 $pdfData = $this->_trailer->getPDFString();
-                while ( strlen($pdfData) > 0 && ($byteCount = fwrite($outputStream, $pdfData)) != false ) {
+                while (strlen($pdfData) > 0 && ($byteCount = fwrite($outputStream, $pdfData)) != false) {
                     $pdfData = substr($pdfData, $byteCount);
                 }
             }
@@ -1404,7 +1403,7 @@ class PdfDocument
                 if ($outputStream === null) {
                     $pdfSegmentBlocks[] = $pdfBlock;
                 } else {
-                    while ( strlen($pdfBlock) > 0 && ($byteCount = fwrite($outputStream, $pdfBlock)) != false ) {
+                    while (strlen($pdfBlock) > 0 && ($byteCount = fwrite($outputStream, $pdfBlock)) != false) {
                         $pdfBlock = substr($pdfBlock, $byteCount);
                     }
                 }
@@ -1439,7 +1438,7 @@ class PdfDocument
 
             return implode('', $pdfSegmentBlocks);
         } else {
-            while ( strlen($pdfBlock) > 0 && ($byteCount = fwrite($outputStream, $pdfBlock)) != false ) {
+            while (strlen($pdfBlock) > 0 && ($byteCount = fwrite($outputStream, $pdfBlock)) != false) {
                 $pdfBlock = substr($pdfBlock, $byteCount);
             }
 

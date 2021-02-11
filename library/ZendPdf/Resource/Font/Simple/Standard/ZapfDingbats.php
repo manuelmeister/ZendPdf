@@ -356,7 +356,9 @@ class ZapfDingbats extends AbstractStandard
           0x27b9 =>   0xc5, 0x27ba =>   0xc6, 0x27bb =>   0xc7, 0x27bc =>   0xc8,
           0x27bd =>   0xc9, 0x27be =>   0xca);
         $this->_cmap = Cmap\AbstractCmap::cmapWithTypeData(
-            Cmap\AbstractCmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
+            Cmap\AbstractCmap::TYPE_BYTE_ENCODING_STATIC,
+            $cmapData
+        );
 
 
         /* Resource dictionary */

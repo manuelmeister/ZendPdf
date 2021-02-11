@@ -18,7 +18,8 @@ use ZendPdf\InternalType\DictionaryObject;
 use ZendPdf\InternalType\ArrayObject;
 use ZendPdf\InternalType\StringObject;
 
-class FormToken {
+class FormToken
+{
     
     /**
      * The FILL mode pre-populates the form field with the requested value.
@@ -49,13 +50,14 @@ class FormToken {
      * @param int $offsetX
      * @param int $offsetY
      */
-    public function __construct($fieldName, $value, $mode, $offsetX=0, $offsetY=0) {
+    public function __construct($fieldName, $value, $mode, $offsetX=0, $offsetY=0)
+    {
         $this->fieldName = $fieldName;
         $this->value = $value;
         $this->offsetX = $offsetX;
         $this->offsetY = $offsetY;
         
-        if ($mode == self::MODE_REPLACE || $mode == self::MODE_REPLACE_WRAP) { // $mode == self::MODE_FILL || 
+        if ($mode == self::MODE_REPLACE || $mode == self::MODE_REPLACE_WRAP) { // $mode == self::MODE_FILL ||
             $this->mode = $mode;
         } else {
             throw new \ZendPdf\Exception\NotImplementedException("Unknown mode supplied: " . $mode);
@@ -106,5 +108,4 @@ class FormToken {
     {
         return $this->offsetY;
     }
-    
 }

@@ -21,7 +21,6 @@ use ZendPdf\Page;
  */
 class Rectangle extends ShapeAbstract
 {
-
     public function __construct($width, $height, $fillType = self::DRAW_FILL_AND_STROKE)
     {
         $this->width = (float)$width;

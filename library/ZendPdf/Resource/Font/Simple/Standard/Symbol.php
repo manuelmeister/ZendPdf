@@ -330,7 +330,9 @@ class Symbol extends AbstractStandard
           0xf8fa =>   0xb9, 0xf8fb =>   0xba, 0xf8fc =>   0xbb, 0xf8fd =>   0xbc,
           0xf8fe =>   0xbd, 0xf8ff =>   0xbe);
         $this->_cmap = Cmap\AbstractCmap::cmapWithTypeData(
-            Cmap\AbstractCmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
+            Cmap\AbstractCmap::TYPE_BYTE_ENCODING_STATIC,
+            $cmapData
+        );
 
 
         /* Resource dictionary */

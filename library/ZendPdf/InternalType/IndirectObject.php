@@ -60,20 +60,21 @@ class IndirectObject extends AbstractTypeObject
      * @param \ZendPdf\ObjectFactory $factory
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-    public function __construct(AbstractTypeObject $val,
-                                $objNum,
-                                $genNum,
-                                ObjectFactory $factory)
-    {
+    public function __construct(
+        AbstractTypeObject $val,
+        $objNum,
+        $genNum,
+        ObjectFactory $factory
+    ) {
         if ($val instanceof self) {
             throw new Exception\RuntimeException('Object number must not be an instance of \ZendPdf\InternalType\IndirectObject.');
         }
 
-        if ( !(is_integer($objNum) && $objNum > 0) ) {
+        if (!(is_integer($objNum) && $objNum > 0)) {
             throw new Exception\RuntimeException('Object number must be positive integer.');
         }
 
-        if ( !(is_integer($genNum) && $genNum >= 0) ) {
+        if (!(is_integer($genNum) && $genNum >= 0)) {
             throw new Exception\RuntimeException('Generation number must be non-negative integer.');
         }
 
@@ -200,10 +201,11 @@ class IndirectObject extends AbstractTypeObject
     
     /**
      * Delete the specified key
-     * 
+     *
      * @param string $property
      */
-    public function __unset($property) {
+    public function __unset($property)
+    {
         unset($this->_value->$property);
     }
 

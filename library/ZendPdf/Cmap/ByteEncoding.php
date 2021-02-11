@@ -60,14 +60,12 @@ class ByteEncoding extends AbstractCmap
     {
         $glyphNumbers = array();
         foreach ($characterCodes as $key => $characterCode) {
-
-           if (! isset($this->_glyphIndexArray[$characterCode])) {
+            if (! isset($this->_glyphIndexArray[$characterCode])) {
                 $glyphNumbers[$key] = AbstractCmap::MISSING_CHARACTER_GLYPH;
                 continue;
             }
 
             $glyphNumbers[$key] = $this->_glyphIndexArray[$characterCode];
-
         }
         return $glyphNumbers;
     }

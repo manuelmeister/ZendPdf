@@ -89,12 +89,12 @@ class Tiff extends AbstractImage
      */
     protected function unpackBytes($type, $bytes)
     {
-        if(!isset($this->_endianType)) {
+        if (!isset($this->_endianType)) {
             throw new Exception\CorruptedImageException(
                 'The unpackBytes function can only be used after the endianness of the file is known'
             );
         }
-        switch($type) {
+        switch ($type) {
             case self::UNPACK_TYPE_BYTE:
                 $format = 'C';
                 $unpacked = unpack($format, $bytes);
@@ -126,14 +126,14 @@ class Tiff extends AbstractImage
      */
     public function __construct($imageFileName)
     {
-        if (($imageFile = @fopen($imageFileName, 'rb')) === false ) {
+        if (($imageFile = @fopen($imageFileName, 'rb')) === false) {
             throw new Exception\IOException("Can not open '$imageFileName' file for reading.");
         }
 
         $byteOrderIndicator = fread($imageFile, 2);
-        if($byteOrderIndicator == 'II') {
+        if ($byteOrderIndicator == 'II') {
             $this->_endianType = self::TIFF_ENDIAN_LITTLE;
-        } else if($byteOrderIndicator == 'MM') {
+        } elseif ($byteOrderIndicator == 'MM') {
             $this->_endianType = self::TIFF_ENDIAN_BIG;
         } else {
             throw new Exception\DomainException('Not a tiff file or Tiff corrupt. No byte order indication found');
@@ -141,7 +141,7 @@ class Tiff extends AbstractImage
 
         $version = $this->unpackBytes(self::UNPACK_TYPE_SHORT, fread($imageFile, 2));
 
-        if($version != 42) {
+        if ($version != 42) {
             throw new Exception\DomainException('Not a tiff file or Tiff corrupt. Incorrect version number.');
         }
         $ifdOffset = $this->unpackBytes(self::UNPACK_TYPE_LONG, fread($imageFile, 4));
@@ -155,8 +155,8 @@ class Tiff extends AbstractImage
          * is four bytes pointing to the offset of the next IFD.
          */
 
-        while($ifdOffset > 0) {
-            if(fseek($imageFile, $ifdOffset, SEEK_SET) == -1 || $ifdOffset+2 >= $this->_fileSize) {
+        while ($ifdOffset > 0) {
+            if (fseek($imageFile, $ifdOffset, SEEK_SET) == -1 || $ifdOffset+2 >= $this->_fileSize) {
                 throw new Exception\CorruptedImageException("Could not seek to the image file directory as indexed by the file. Likely cause is TIFF corruption. Offset: ". $ifdOffset);
             }
 
@@ -171,12 +171,12 @@ class Tiff extends AbstractImage
              * 4 bytes (long) number of values, or value count.
              * 4 bytes (mixed) data if the data will fit into 4 bytes or an offset if the data is too large.
              */
-            for($dirEntryIdx = 1; $dirEntryIdx <= $numDirEntries; $dirEntryIdx++) {
+            for ($dirEntryIdx = 1; $dirEntryIdx <= $numDirEntries; $dirEntryIdx++) {
                 $tag         = $this->unpackBytes(self::UNPACK_TYPE_SHORT, fread($imageFile, 2));
                 $fieldType   = $this->unpackBytes(self::UNPACK_TYPE_SHORT, fread($imageFile, 2));
                 $valueCount  = $this->unpackBytes(self::UNPACK_TYPE_LONG, fread($imageFile, 4));
 
-                switch($fieldType) {
+                switch ($fieldType) {
                     case self::TIFF_FIELD_TYPE_BYTE:
                         $fieldLength = $valueCount;
                         break;
@@ -198,8 +198,8 @@ class Tiff extends AbstractImage
 
                 $offsetBytes = fread($imageFile, 4);
 
-                if($fieldLength <= 4) {
-                    switch($fieldType) {
+                if ($fieldLength <= 4) {
+                    switch ($fieldType) {
                         case self::TIFF_FIELD_TYPE_BYTE:
                             $value = $this->unpackBytes(self::UNPACK_TYPE_BYTE, $offsetBytes);
                             break;
@@ -222,7 +222,7 @@ class Tiff extends AbstractImage
                  * they will be > 4 bytes and require seek/extraction of the offset. Same goes for extracting arrays of data, like
                  * the data offsets and length. This should be fixed in the future.
                  */
-                switch($tag) {
+                switch ($tag) {
                     case self::TIFF_TAG_IMAGE_WIDTH:
                         $this->_width = $value;
                         break;
@@ -230,7 +230,7 @@ class Tiff extends AbstractImage
                         $this->_height = $value;
                         break;
                     case self::TIFF_TAG_BITS_PER_SAMPLE:
-                        if($valueCount>1) {
+                        if ($valueCount>1) {
                             $fp = ftell($imageFile);
                             fseek($imageFile, $refOffset, SEEK_SET);
                             $this->_bitsPerSample = $this->unpackBytes(self::UNPACK_TYPE_SHORT, fread($imageFile, 2));
@@ -241,7 +241,7 @@ class Tiff extends AbstractImage
                         break;
                     case self::TIFF_TAG_COMPRESSION:
                         $this->_compression = $value;
-                        switch($value) {
+                        switch ($value) {
                             case self::TIFF_COMPRESSION_UNCOMPRESSED:
                                 $this->_filter = 'None';
                                 break;
@@ -276,7 +276,7 @@ class Tiff extends AbstractImage
                         $this->_colorCode = $value;
                         $this->_whiteIsZero = false;
                         $this->_blackIsZero = false;
-                        switch($value) {
+                        switch ($value) {
                             case self::TIFF_PHOTOMETRIC_INTERPRETATION_WHITE_IS_ZERO:
                                 $this->_whiteIsZero = true;
                                 $this->_colorSpace = 'DeviceGray';
@@ -304,7 +304,7 @@ class Tiff extends AbstractImage
                         }
                         break;
                     case self::TIFF_TAG_STRIP_OFFSETS:
-                        if($valueCount>1) {
+                        if ($valueCount>1) {
                             $format = ($this->_endianType == self::TIFF_ENDIAN_LITTLE)?'V*':'N*';
                             $fp = ftell($imageFile);
                             fseek($imageFile, $refOffset, SEEK_SET);
@@ -316,7 +316,7 @@ class Tiff extends AbstractImage
                         }
                         break;
                    case self::TIFF_TAG_STRIP_BYTE_COUNTS:
-                        if($valueCount>1) {
+                        if ($valueCount>1) {
                             $format = ($this->_endianType == self::TIFF_ENDIAN_LITTLE)?'V*':'N*';
                             $fp = ftell($imageFile);
                             fseek($imageFile, $refOffset, SEEK_SET);
@@ -335,16 +335,16 @@ class Tiff extends AbstractImage
             $ifdOffset = $this->unpackBytes(self::UNPACK_TYPE_LONG, fread($imageFile, 4));
         }
 
-        if(!isset($this->_imageDataOffset) || !isset($this->_imageDataLength)) {
+        if (!isset($this->_imageDataOffset) || !isset($this->_imageDataLength)) {
             throw new Exception\CorruptedImageException('TIFF: The image processed did not contain image data as expected.');
         }
 
         $imageDataBytes = '';
-        if(is_array($this->_imageDataOffset)) {
-            if(!is_array($this->_imageDataLength)) {
+        if (is_array($this->_imageDataOffset)) {
+            if (!is_array($this->_imageDataLength)) {
                 throw new Exception\CorruptedImageException('TIFF: The image contained multiple data offsets but not multiple data lengths. Tiff may be corrupt.');
             }
-            foreach($this->_imageDataOffset as $idx => $offset) {
+            foreach ($this->_imageDataOffset as $idx => $offset) {
                 fseek($imageFile, $this->_imageDataOffset[$idx], SEEK_SET);
                 $imageDataBytes .= fread($imageFile, $this->_imageDataLength[$idx]);
             }
@@ -352,7 +352,7 @@ class Tiff extends AbstractImage
             fseek($imageFile, $this->_imageDataOffset, SEEK_SET);
             $imageDataBytes = fread($imageFile, $this->_imageDataLength);
         }
-        if($imageDataBytes === '') {
+        if ($imageDataBytes === '') {
             throw new Exception\CorruptedImageException('TIFF: No data. Image Corruption');
         }
 
@@ -361,7 +361,7 @@ class Tiff extends AbstractImage
         parent::__construct();
 
         $imageDictionary = $this->_resource->dictionary;
-        if(!isset($this->_width) || !isset($this->_height)) {
+        if (!isset($this->_width) || !isset($this->_height)) {
             throw new Exception\CorruptedImageException('Problem reading tiff file. Tiff is probably corrupt.');
         }
 
@@ -379,13 +379,13 @@ class Tiff extends AbstractImage
         $this->_imageProperties['PDFcolorSpace']       = $this->_colorSpace;
 
         $imageDictionary->Width            = new InternalType\NumericObject($this->_width);
-        if($this->_whiteIsZero === true) {
+        if ($this->_whiteIsZero === true) {
             $imageDictionary->Decode       = new InternalType\ArrayObject(array(new InternalType\NumericObject(1), new InternalType\NumericObject(0)));
         }
         $imageDictionary->Height           = new InternalType\NumericObject($this->_height);
         $imageDictionary->ColorSpace       = new InternalType\NameObject($this->_colorSpace);
         $imageDictionary->BitsPerComponent = new InternalType\NumericObject($this->_bitsPerSample);
-        if(isset($this->_filter) && $this->_filter != 'None') {
+        if (isset($this->_filter) && $this->_filter != 'None') {
             $imageDictionary->Filter       = new InternalType\NameObject($this->_filter);
         }
 

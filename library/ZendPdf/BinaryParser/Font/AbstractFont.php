@@ -99,10 +99,11 @@ abstract class AbstractFont extends BinaryParser\AbstractBinaryParser
      * @return string
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-    public function readStringUTF16($byteCount,
-                                    $byteOrder = BinaryParser\AbstractBinaryParser::BYTE_ORDER_BIG_ENDIAN,
-                                    $characterSet = '')
-    {
+    public function readStringUTF16(
+        $byteCount,
+        $byteOrder = BinaryParser\AbstractBinaryParser::BYTE_ORDER_BIG_ENDIAN,
+        $characterSet = ''
+    ) {
         return parent::readStringUTF16($byteCount, $byteOrder, 'UTF-16BE');
     }
 

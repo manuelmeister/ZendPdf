@@ -52,7 +52,7 @@ class AsciiHex implements StreamFilterInterface
             $charCode = ord($data[$count]);
 
             if ($commentMode) {
-                if ($charCode == 0x0A  || $charCode == 0x0D ) {
+                if ($charCode == 0x0A  || $charCode == 0x0D) {
                     $commentMode = false;
                 }
 

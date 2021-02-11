@@ -90,10 +90,10 @@ class StreamContent extends AbstractTypeObject
       * @param integer $mode  Cloning mode (defines filter for objects cloning)
       * @return \ZendPdf\InternalType\AbstractTypeObject
       */
-     public function makeClone(Pdf\ObjectFactory $factory, array &$processed, $mode)
-     {
-         return new self($this->value->getRef());
-     }
+    public function makeClone(Pdf\ObjectFactory $factory, array &$processed, $mode)
+    {
+        return new self($this->value->getRef());
+    }
 
     /**
      * Return object as string

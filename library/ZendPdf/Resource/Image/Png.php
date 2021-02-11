@@ -47,10 +47,11 @@ class Png extends AbstractImage
     protected $_height;
     protected $_imageProperties;
 
-    public function __construct($imageFileName, $imageFile = null) {
+    public function __construct($imageFileName, $imageFile = null)
+    {
         parent::__construct();
         if ($imageFileName) {
-            if (($imageFile = @fopen($imageFileName, 'rb')) === false ) {
+            if (($imageFile = @fopen($imageFileName, 'rb')) === false) {
                 throw new Exception\IOException("Can not open '$imageFileName' file for reading.");
             }
             $this->process($imageFile);
@@ -59,7 +60,8 @@ class Png extends AbstractImage
         }
     }
 
-    protected function process($imageFile) {
+    protected function process($imageFile)
+    {
         
         //Check if the file is a PNG
         fseek($imageFile, 1, SEEK_CUR); //First signature byte (%)
@@ -67,17 +69,17 @@ class Png extends AbstractImage
             throw new Exception\DomainException('Image is not a PNG');
         }
         fseek($imageFile, 12, SEEK_CUR); //Signature bytes (Includes the IHDR chunk) IHDR processed linerarly because it doesnt contain a variable chunk length
-        $wtmp = unpack('Ni',fread($imageFile, 4)); //Unpack a 4-Byte Long
+        $wtmp = unpack('Ni', fread($imageFile, 4)); //Unpack a 4-Byte Long
         $width = $wtmp['i'];
-        $htmp = unpack('Ni',fread($imageFile, 4));
+        $htmp = unpack('Ni', fread($imageFile, 4));
         $height = $htmp['i'];
         $bits = ord(fread($imageFile, 1)); //Higher than 8 bit depths are only supported in later versions of PDF.
         $color = ord(fread($imageFile, 1));
 
         $compression = ord(fread($imageFile, 1));
-        $prefilter = ord(fread($imageFile,1));
+        $prefilter = ord(fread($imageFile, 1));
 
-        if (($interlacing = ord(fread($imageFile,1))) != self::PNG_INTERLACING_DISABLED) {
+        if (($interlacing = ord(fread($imageFile, 1))) != self::PNG_INTERLACING_DISABLED) {
             throw new Exception\NotImplementedException('Only non-interlaced images are currently supported.');
         }
 
@@ -97,11 +99,11 @@ class Png extends AbstractImage
          * The following loop processes PNG chunks. 4 Byte Longs are packed first give the chunk length
          * followed by the chunk signature, a four byte code. IDAT and IEND are manditory in any PNG.
          */
-        while(($chunkLengthBytes = fread($imageFile, 4)) !== false) {
+        while (($chunkLengthBytes = fread($imageFile, 4)) !== false) {
             $chunkLengthtmp         = unpack('Ni', $chunkLengthBytes);
             $chunkLength            = $chunkLengthtmp['i'];
             $chunkType                      = fread($imageFile, 4);
-            switch($chunkType) {
+            switch ($chunkType) {
                 case 'IDAT': //Image Data
                     /*
                      * Reads the actual image data from the PNG file. Since we know at this point that the compression
@@ -128,9 +130,9 @@ class Png extends AbstractImage
                             break;
 
                         case self::PNG_CHANNEL_RGB:
-                            $red = ord(substr($trnsData,1,1));
-                            $green = ord(substr($trnsData,3,1));
-                            $blue = ord(substr($trnsData,5,1));
+                            $red = ord(substr($trnsData, 1, 1));
+                            $green = ord(substr($trnsData, 3, 1));
+                            $blue = ord(substr($trnsData, 5, 1));
                             $transparencyData = array(new InternalType\NumericObject($red),
                                                       new InternalType\NumericObject($red),
                                                       new InternalType\NumericObject($green),
@@ -141,7 +143,7 @@ class Png extends AbstractImage
 
                         case self::PNG_CHANNEL_INDEXED:
                             //Find the first transparent color in the index, we will mask that. (This is a bit of a hack. This should be a SMask and mask all entries values).
-                            if(($trnsIdx = strpos($trnsData, "\0")) !== false) {
+                            if (($trnsIdx = strpos($trnsData, "\0")) !== false) {
                                 $transparencyData = array(new InternalType\NumericObject($trnsIdx),
                                                           new InternalType\NumericObject($trnsIdx));
                             }
@@ -157,7 +159,7 @@ class Png extends AbstractImage
                     fseek($imageFile, 4, SEEK_CUR); //4 Byte Ending Sequence
                     break;
 
-                case 'IEND';
+                case 'IEND':
                     break 2; //End the loop too
 
                 default:
@@ -180,7 +182,7 @@ class Png extends AbstractImage
                 break;
 
             case self::PNG_CHANNEL_INDEXED:
-                if(empty($paletteData)) {
+                if (empty($paletteData)) {
                     throw new Exception\CorruptedImageException("PNG Corruption: No palette data read for indexed type PNG.");
                 }
                 $colorSpace = new InternalType\ArrayObject();
@@ -197,7 +199,7 @@ class Png extends AbstractImage
                  * the other will contain the Gray transparency overlay data. The former will become the object data and the latter
                  * will become the Shadow Mask (SMask).
                  */
-                if($bits > 8) {
+                if ($bits > 8) {
                     throw new Exception\NotImplementedException('Alpha PNGs with bit depth > 8 are not yet supported');
                 }
 
@@ -216,7 +218,7 @@ class Png extends AbstractImage
                 $pngDataRawDecoded = $decodingStream->value;
 
                 //Iterate every pixel and copy out gray data and alpha channel (this will be slow)
-                for($pixel = 0, $pixelcount = ($width * $height); $pixel < $pixelcount; $pixel++) {
+                for ($pixel = 0, $pixelcount = ($width * $height); $pixel < $pixelcount; $pixel++) {
                     $imageDataTmp .= $pngDataRawDecoded[($pixel*2)];
                     $smaskData .= $pngDataRawDecoded[($pixel*2)+1];
                 }
@@ -230,7 +232,7 @@ class Png extends AbstractImage
                  * the other will contain the Gray transparency overlay data. The former will become the object data and the latter
                  * will become the Shadow Mask (SMask).
                  */
-                if($bits > 8) {
+                if ($bits > 8) {
                     throw new Exception\NotImplementedException('Alpha PNGs with bit depth > 8 are not yet supported');
                 }
 
@@ -249,7 +251,7 @@ class Png extends AbstractImage
                 $pngDataRawDecoded = $decodingStream->value;
 
                 //Iterate every pixel and copy out rgb data and alpha channel (this will be slow)
-                for($pixel = 0, $pixelcount = ($width * $height); $pixel < $pixelcount; $pixel++) {
+                for ($pixel = 0, $pixelcount = ($width * $height); $pixel < $pixelcount; $pixel++) {
                     $imageDataTmp .= $pngDataRawDecoded[($pixel*4)+0] . $pngDataRawDecoded[($pixel*4)+1] . $pngDataRawDecoded[($pixel*4)+2];
                     $smaskData .= $pngDataRawDecoded[($pixel*4)+3];
                 }
@@ -262,12 +264,12 @@ class Png extends AbstractImage
                 throw new Exception\CorruptedImageException('PNG Corruption: Invalid color space.');
         }
 
-        if(empty($imageData)) {
+        if (empty($imageData)) {
             throw new Exception\CorruptedImageException('Corrupt PNG Image. Mandatory IDAT chunk not found.');
         }
 
         $imageDictionary = $this->_resource->dictionary;
-        if(!empty($smaskData)) {
+        if (!empty($smaskData)) {
             /*
              * Includes the Alpha transparency data as a Gray Image, then assigns the image as the Shadow Mask for the main image data.
              */
@@ -290,7 +292,7 @@ class Png extends AbstractImage
             $smaskStream->dictionary->Filter       = new InternalType\NameObject('FlateDecode');
         }
 
-        if(!empty($transparencyData)) {
+        if (!empty($transparencyData)) {
             //This is experimental and not properly tested.
             $imageDictionary->Mask = new InternalType\ArrayObject($transparencyData);
         }

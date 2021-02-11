@@ -64,7 +64,7 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
             if ($predictor != 1   &&  $predictor != 2   &&
                 $predictor != 10  &&  $predictor != 11  &&   $predictor != 12  &&
                 $predictor != 13  &&  $predictor != 14  &&   $predictor != 15) {
-                throw new Exception\CorruptedPdfException('Invalid value of \'Predictor\' decode param - ' . $predictor . '.' );
+                throw new Exception\CorruptedPdfException('Invalid value of \'Predictor\' decode param - ' . $predictor . '.');
             }
             return $predictor;
         } else {
@@ -85,7 +85,7 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
             $colors = $params['Colors'];
 
             if ($colors != 1  &&  $colors != 2  &&  $colors != 3  &&  $colors != 4) {
-                throw new Exception\CorruptedPdfException('Invalid value of \'Color\' decode param - ' . $colors . '.' );
+                throw new Exception\CorruptedPdfException('Invalid value of \'Color\' decode param - ' . $colors . '.');
             }
             return $colors;
         } else {
@@ -107,8 +107,8 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
 
             if ($bitsPerComponent != 1  &&  $bitsPerComponent != 2  &&
                 $bitsPerComponent != 4  &&  $bitsPerComponent != 8  &&
-                $bitsPerComponent != 16 ) {
-                throw new Exception\CorruptedPdfException('Invalid value of \'BitsPerComponent\' decode param - ' . $bitsPerComponent . '.' );
+                $bitsPerComponent != 16) {
+                throw new Exception\CorruptedPdfException('Invalid value of \'BitsPerComponent\' decode param - ' . $bitsPerComponent . '.');
             }
             return $bitsPerComponent;
         } else {
@@ -154,7 +154,7 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
 
         /** TIFF Predictor 2 */
         if ($predictor == 2) {
-            throw new Exception\NotImplementedException('TIFF compression perediction is not implemented yet' );
+            throw new Exception\NotImplementedException('TIFF compression perediction is not implemented yet');
         }
 
         /** Optimal PNG prediction */
@@ -172,7 +172,7 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
             ) {
             $predictor -= 10;
 
-            if($bitsPerComponent == 16) {
+            if ($bitsPerComponent == 16) {
                 throw new Exception\CorruptedPdfException("PNG Prediction with bit depth greater than 8 not yet supported.");
             }
 
@@ -233,7 +233,7 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
                         for ($count2 = 0; $count2 < $bytesPerRow; $count2++) {
                             $newByte = ord($data[$offset++]);
                             // Note. chr() automatically cuts input to 8 bit
-                            $output .= chr($newByte - floor(( $lastSample[$count2 % $bytesPerSample] + $lastRow[$count2])/2));
+                            $output .= chr($newByte - floor(($lastSample[$count2 % $bytesPerSample] + $lastRow[$count2])/2));
                             $lastSample[$count2 % $bytesPerSample] = $lastRow[$count2] = $newByte;
                         }
                     }
@@ -249,10 +249,12 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
                         for ($count2 = 0; $count2 < $bytesPerRow; $count2++) {
                             $newByte = ord($data[$offset++]);
                             // Note. chr() automatically cuts input to 8 bit
-                            $output .= chr($newByte - self::_paeth( $lastSample[$count2 % $bytesPerSample],
-                                                                    $lastRow[$count2],
-                                                                    ($count2 - $bytesPerSample  <  0)?
-                                                                         0 : $lastRow[$count2 - $bytesPerSample] ));
+                            $output .= chr($newByte - self::_paeth(
+                                $lastSample[$count2 % $bytesPerSample],
+                                $lastRow[$count2],
+                                ($count2 - $bytesPerSample  <  0)?
+                                                                         0 : $lastRow[$count2 - $bytesPerSample]
+                            ));
                             $lastSample[$count2 % $bytesPerSample] = $currentRow[$count2] = $newByte;
                         }
                         $lastRow = $currentRow;
@@ -262,7 +264,7 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
             return $output;
         }
 
-        throw new Exception\CorruptedPdfException('Unknown prediction algorithm - ' . $predictor . '.' );
+        throw new Exception\CorruptedPdfException('Unknown prediction algorithm - ' . $predictor . '.');
     }
 
     /**
@@ -286,7 +288,7 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
 
         /** TIFF Predictor 2 */
         if ($predictor == 2) {
-            throw new Exception\NotImplementedException('TIFF compression perediction is not implemented yet' );
+            throw new Exception\NotImplementedException('TIFF compression perediction is not implemented yet');
         }
 
         /**
@@ -300,7 +302,6 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
             $predictor == 13 ||  /** Average prediction */
             $predictor == 14 ||  /** Paeth prediction   */
             $predictor == 15     /** Optimal prediction */) {
-
             $bitsPerSample  = $bitsPerComponent*$colors;
             $bytesPerSample = ceil($bitsPerSample/8);
             $bytesPerRow    = ceil($bitsPerSample*$columns/8);
@@ -337,9 +338,10 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
 
                     case 3: // Average prediction
                         for ($count2 = 0; $count2 < $bytesPerRow  &&  $offset < strlen($data); $count2++) {
-                            $decodedByte = (ord($data[$offset++]) +
-                                            floor(( $lastSample[$count2 % $bytesPerSample] + $lastRow[$count2])/2)
-                                           ) & 0xFF;
+                            $decodedByte = (
+                                ord($data[$offset++]) +
+                                            floor(($lastSample[$count2 % $bytesPerSample] + $lastRow[$count2])/2)
+                            ) & 0xFF;
                             $lastSample[$count2 % $bytesPerSample] = $lastRow[$count2] = $decodedByte;
                             $output .= chr($decodedByte);
                         }
@@ -348,12 +350,15 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
                     case 4: // Paeth prediction
                         $currentRow = array();
                         for ($count2 = 0; $count2 < $bytesPerRow  &&  $offset < strlen($data); $count2++) {
-                            $decodedByte = (ord($data[$offset++]) +
-                                            self::_paeth($lastSample[$count2 % $bytesPerSample],
-                                                         $lastRow[$count2],
-                                                         ($count2 - $bytesPerSample  <  0)?
-                                                              0 : $lastRow[$count2 - $bytesPerSample])
-                                           ) & 0xFF;
+                            $decodedByte = (
+                                ord($data[$offset++]) +
+                                            self::_paeth(
+                                                $lastSample[$count2 % $bytesPerSample],
+                                                $lastRow[$count2],
+                                                ($count2 - $bytesPerSample  <  0)?
+                                                              0 : $lastRow[$count2 - $bytesPerSample]
+                                            )
+                            ) & 0xFF;
                             $lastSample[$count2 % $bytesPerSample] = $currentRow[$count2] = $decodedByte;
                             $output .= chr($decodedByte);
                         }
@@ -367,6 +372,6 @@ abstract class AbstractCompression implements Pdf\InternalType\StreamFilter\Stre
             return $output;
         }
 
-        throw new Exception\CorruptedPdfException('Unknown prediction algorithm - ' . $predictor . '.' );
+        throw new Exception\CorruptedPdfException('Unknown prediction algorithm - ' . $predictor . '.');
     }
 }

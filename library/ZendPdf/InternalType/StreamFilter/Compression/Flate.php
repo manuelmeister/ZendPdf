@@ -38,7 +38,7 @@ class Flate extends AbstractCompression
         }
 
         if (extension_loaded('zlib')) {
-            $trackErrors = ini_get( "track_errors");
+            $trackErrors = ini_get("track_errors");
             ini_set('track_errors', '1');
 
             if (($output = @gzcompress($data)) === false) {
@@ -70,7 +70,7 @@ class Flate extends AbstractCompression
         global $php_errormsg;
 
         if (extension_loaded('zlib')) {
-            $trackErrors = ini_get( "track_errors");
+            $trackErrors = ini_get("track_errors");
             ini_set('track_errors', '1');
 
             if (($output = @gzuncompress($data)) === false) {

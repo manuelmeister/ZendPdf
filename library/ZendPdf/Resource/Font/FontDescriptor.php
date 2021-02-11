@@ -58,10 +58,11 @@ class FontDescriptor
      * @return \ZendPdf\InternalType\DictionaryObject
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-    public static function factory(AbstractFont $font,
-                                   OpenTypeFontParser\AbstractOpenType $fontParser,
-                                   $embeddingOptions)
-    {
+    public static function factory(
+        AbstractFont $font,
+        OpenTypeFontParser\AbstractOpenType $fontParser,
+        $embeddingOptions
+    ) {
         /* The font descriptor object contains the rest of the font metrics and
          * the information about the embedded font program (if applicible).
          */
@@ -151,7 +152,6 @@ class FontDescriptor
                              . 'in the $options parameter of the font constructor.';
                     throw new Exception\DomainException($message);
                 }
-
             } else {
                 /* Otherwise, the default behavior is to embed all custom fonts.
                  */

@@ -12,7 +12,6 @@ namespace ZendPdfTest\InternalType;
 
 use ZendPdf\InternalType;
 
-
 /**
  * \ZendPdf\InternalType\StringObject
  */
@@ -44,7 +43,7 @@ class StringTest extends \PHPUnit_Framework_TestCase
     public function testToString()
     {
         $stringObj = new InternalType\StringObject('some text ()');
-        $this->assertEquals($stringObj->toString(), '(some text \\(\\))' );
+        $this->assertEquals($stringObj->toString(), '(some text \\(\\))');
     }
 
     public function testEscape()
@@ -54,8 +53,10 @@ class StringTest extends \PHPUnit_Framework_TestCase
 
     public function testUnescape()
     {
-        $this->assertEquals(InternalType\StringObject::unescape("\\n\\r\\t\\b\\f\\(\\)\\\\  \nsome \\\ntext"),
-                            "\n\r\t\x08\x0C()\\  \nsome text");
+        $this->assertEquals(
+            InternalType\StringObject::unescape("\\n\\r\\t\\b\\f\\(\\)\\\\  \nsome \\\ntext"),
+            "\n\r\t\x08\x0C()\\  \nsome text"
+        );
     }
 
     /**
@@ -69,8 +70,11 @@ class StringTest extends \PHPUnit_Framework_TestCase
             0334 => '\\334'
         );
         foreach ($input as $k => $v) {
-            $this->assertEquals(InternalType\StringObject::unescape($v),
-                chr($k), 'expected German Umlaut');
+            $this->assertEquals(
+                InternalType\StringObject::unescape($v),
+                chr($k),
+                'expected German Umlaut'
+            );
         }
     }
 }

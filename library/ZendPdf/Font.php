@@ -450,7 +450,7 @@ abstract class Font
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
     public static function fontWithName($name, $embeddingOptions = 0)
-        {
+    {
         /* First check the cache. Don't duplicate font objects.
          */
         if (isset(self::$_fontNames[$name])) {
@@ -631,13 +631,11 @@ abstract class Font
             $filePathKey = md5($filePath);
             self::$_fontFilePaths[$filePathKey] = $font;
             return $font;
-
         } else {
             /* The type of font could not be determined. Give up.
              */
             throw new Exception\DomainException("Cannot determine font type: $filePath");
-         }
-
+        }
     }
 
 

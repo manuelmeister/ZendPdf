@@ -43,11 +43,13 @@ class Markup extends AbstractAnnotation
 
         if ($annotationDictionary->Subtype === null  ||
             $annotationDictionary->Subtype->getType() != InternalType\AbstractTypeObject::TYPE_NAME  ||
-            !in_array( $annotationDictionary->Subtype->value,
-                       array(self::SUBTYPE_HIGHLIGHT,
+            !in_array(
+                $annotationDictionary->Subtype->value,
+                array(self::SUBTYPE_HIGHLIGHT,
                              self::SUBTYPE_UNDERLINE,
                              self::SUBTYPE_SQUIGGLY,
-                             self::SUBTYPE_STRIKEOUT) )) {
+                             self::SUBTYPE_STRIKEOUT)
+            )) {
             throw new Exception\CorruptedPdfException('Subtype => Markup entry is omitted or has wrong value.');
         }
 

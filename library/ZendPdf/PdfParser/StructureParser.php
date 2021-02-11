@@ -97,7 +97,7 @@ class StructureParser
              * Common cross-reference table
              */
             $this->_stringParser->skipWhiteSpace();
-            while ( ($nextLexeme = $this->_stringParser->readLexeme()) != 'trailer' ) {
+            while (($nextLexeme = $this->_stringParser->readLexeme()) != 'trailer') {
                 if (!ctype_digit($nextLexeme)) {
                     throw new Exception\CorruptedPdfException(sprintf('PDF file syntax error. Offset - 0x%X. Cross-reference table subheader values must contain only digits.', $this->_stringParser->offset-strlen($nextLexeme)));
                 }
@@ -152,25 +152,29 @@ class StructureParser
                     switch ($inUseKey) {
                         case 'f':
                             // free entry
-                            unset( $this->_refTable[$objNum . ' ' . $genNumber . ' R'] );
-                            $refTable->addReference($objNum . ' ' . $genNumber . ' R',
-                                                    $objectOffset,
-                                                    false);
+                            unset($this->_refTable[$objNum . ' ' . $genNumber . ' R']);
+                            $refTable->addReference(
+                                $objNum . ' ' . $genNumber . ' R',
+                                $objectOffset,
+                                false
+                            );
                             break;
 
                         case 'n':
                             // in-use entry
 
-                            $refTable->addReference($objNum . ' ' . $genNumber . ' R',
-                                                    $objectOffset,
-                                                    true);
+                            $refTable->addReference(
+                                $objNum . ' ' . $genNumber . ' R',
+                                $objectOffset,
+                                true
+                            );
                     }
 
-                    if ( !DataParser::isWhiteSpace(ord( $this->_stringParser->data[$this->_stringParser->offset] )) ) {
+                    if (!DataParser::isWhiteSpace(ord($this->_stringParser->data[$this->_stringParser->offset]))) {
                         throw new Exception\CorruptedPdfException(sprintf('PDF file cross-reference table syntax error. Offset - 0x%X. Value separator must be white space.', $this->_stringParser->offset));
                     }
                     $this->_stringParser->offset++;
-                    if ( !DataParser::isWhiteSpace(ord( $this->_stringParser->data[$this->_stringParser->offset] )) ) {
+                    if (!DataParser::isWhiteSpace(ord($this->_stringParser->data[$this->_stringParser->offset]))) {
                         throw new Exception\CorruptedPdfException(sprintf('PDF file cross-reference table syntax error. Offset - 0x%X. Value separator must be white space.', $this->_stringParser->offset));
                     }
                     $this->_stringParser->offset++;
@@ -291,7 +295,7 @@ class StructureParser
 
         $trailerObj = new Trailer\Parsed($trailerDict, $context);
         if ($trailerDict->Prev instanceof InternalType\NumericObject ||
-            $trailerDict->Prev instanceof InternalType\IndirectObjectReference ) {
+            $trailerDict->Prev instanceof InternalType\IndirectObjectReference) {
             $trailerObj->setPrev($this->_loadXRefTable($trailerDict->Prev->value));
             $context->getRefTable()->setParent($trailerObj->getPrev()->getRefTable());
         }
@@ -331,15 +335,15 @@ class StructureParser
     public function __construct($source, Pdf\ObjectFactory $factory, $load)
     {
         if ($load) {
-            if (($pdfFile = @fopen($source, 'rb')) === false ) {
-                throw new Exception\IOException( "Can not open '$source' file for reading." );
+            if (($pdfFile = @fopen($source, 'rb')) === false) {
+                throw new Exception\IOException("Can not open '$source' file for reading.");
             }
 
             $byteCount = filesize($source);
 
             $data = fread($pdfFile, $byteCount);
             $byteCount -= strlen($data);
-            while ( $byteCount > 0 && ($nextBlock = fread($pdfFile, $byteCount)) != false ) {
+            while ($byteCount > 0 && ($nextBlock = fread($pdfFile, $byteCount)) != false) {
                 $data .= $nextBlock;
                 $byteCount -= strlen($nextBlock);
             }
@@ -356,7 +360,7 @@ class StructureParser
         }
 
         $pdfVersion = substr($pdfVersionComment, 5);
-        if (version_compare($pdfVersion, '0.9',  '<')  ||
+        if (version_compare($pdfVersion, '0.9', '<')  ||
             version_compare($pdfVersion, '1.61', '>=')
            ) {
             /**
@@ -379,21 +383,21 @@ class StructureParser
         /**
          * Go to end of cross-reference table offset
          */
-        while (DataParser::isWhiteSpace( ord($this->_stringParser->data[$this->_stringParser->offset]) )&&
+        while (DataParser::isWhiteSpace(ord($this->_stringParser->data[$this->_stringParser->offset]))&&
                ($this->_stringParser->offset > 0)) {
             $this->_stringParser->offset--;
         }
         /**
          * Go to the start of cross-reference table offset
          */
-        while ( (!DataParser::isWhiteSpace( ord($this->_stringParser->data[$this->_stringParser->offset]) ))&&
+        while ((!DataParser::isWhiteSpace(ord($this->_stringParser->data[$this->_stringParser->offset])))&&
                ($this->_stringParser->offset > 0)) {
             $this->_stringParser->offset--;
         }
         /**
          * Go to the end of 'startxref' keyword
          */
-        while (DataParser::isWhiteSpace( ord($this->_stringParser->data[$this->_stringParser->offset]) )&&
+        while (DataParser::isWhiteSpace(ord($this->_stringParser->data[$this->_stringParser->offset]))&&
                ($this->_stringParser->offset > 0)) {
             $this->_stringParser->offset--;
         }

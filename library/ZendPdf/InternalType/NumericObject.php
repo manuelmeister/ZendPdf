@@ -73,9 +73,11 @@ class NumericObject extends AbstractTypeObject
          * PDF doesn't support exponental format.
          * Fixed point format must be used instead
          */
-        $prec = 0; $v = $this->value;
-        while (abs( floor($v) - $v ) > 1e-10) {
-            $prec++; $v *= 10;
+        $prec = 0;
+        $v = $this->value;
+        while (abs(floor($v) - $v) > 1e-10) {
+            $prec++;
+            $v *= 10;
         }
         return sprintf("%.{$prec}F", $this->value);
     }

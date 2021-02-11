@@ -39,7 +39,7 @@ class NameObject extends AbstractTypeObject
     public function __construct($val)
     {
         settype($val, 'string');
-        if (strpos($val,"\x00") !== false) {
+        if (strpos($val, "\x00") !== false) {
             throw new Exception\RuntimeException('Null character is not allowed in PDF Names');
         }
         $this->value   = (string)$val;
@@ -99,7 +99,7 @@ class NameObject extends AbstractTypeObject
                     break;
 
                 default:
-                    if ($nextCode >= 33 && $nextCode <= 126 ) {
+                    if ($nextCode >= 33 && $nextCode <= 126) {
                         // Visible ASCII symbol
                         $outStr .= $inStr[$count];
                     } else {
@@ -124,11 +124,11 @@ class NameObject extends AbstractTypeObject
 
         /** @todo switch implementation to strspn() usage!!!!!!! */
         for ($count = 0; $count < strlen($inStr); $count++) {
-            if ($inStr[$count] != '#' )  {
+            if ($inStr[$count] != '#') {
                 $outStr .= $inStr[$count];
             } else {
                 // Escape sequence
-                $outStr .= chr(base_convert(substr($inStr, $count+1, 2), 16, 10 ));
+                $outStr .= chr(base_convert(substr($inStr, $count+1, 2), 16, 10));
                 $count +=2;
             }
         }

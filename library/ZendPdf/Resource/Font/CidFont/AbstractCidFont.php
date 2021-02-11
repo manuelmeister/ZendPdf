@@ -218,7 +218,7 @@ abstract class AbstractCidFont extends FontResource\AbstractFont
                 // Save it as 'c_1st [w1 w2 ... wn]'.
                 $pdfCharsWidths[] = new InternalType\NumericObject($startCode); // First character code
                 $pdfCharsWidths[] = new InternalType\ArrayObject($pdfWidths);   // Widths array
-            } elseif ($widthsInSequence != 0){
+            } elseif ($widthsInSequence != 0) {
                 // We have widths sequence
                 // Save it as 'c_1st c_last w'.
                 $pdfCharsWidths[] = new InternalType\NumericObject($startCode);                         // First character code

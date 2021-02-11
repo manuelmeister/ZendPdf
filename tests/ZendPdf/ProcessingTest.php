@@ -111,9 +111,12 @@ class ProcessingTest extends \PHPUnit_Framework_TestCase
             $x[] = 140 + 25*cos(3*M_PI_4*$count);
             $y[] = 375 + 25*sin(3*M_PI_4*$count);
         }
-        $page2->drawPolygon($x, $y,
-                            Pdf\Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            Pdf\Page::FILL_METHOD_EVEN_ODD);
+        $page2->drawPolygon(
+            $x,
+            $y,
+            Pdf\Page::SHAPE_DRAW_FILL_AND_STROKE,
+            Pdf\Page::FILL_METHOD_EVEN_ODD
+        );
 
         // Draw line
         $page2->setLineWidth(0.5)
@@ -138,7 +141,7 @@ class ProcessingTest extends \PHPUnit_Framework_TestCase
         $pdf->pages = array_reverse($pdf->pages);
 
         // Mark page as modified
-        foreach ($pdf->pages as $page){
+        foreach ($pdf->pages as $page) {
             $page->saveGS();
 
             // Create new Style
@@ -217,9 +220,12 @@ class ProcessingTest extends \PHPUnit_Framework_TestCase
             $x[] = 140 + 25*cos(3*M_PI_4*$count);
             $y[] = 375 + 25*sin(3*M_PI_4*$count);
         }
-        $page2->drawPolygon($x, $y,
-                            Pdf\Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            Pdf\Page::FILL_METHOD_EVEN_ODD);
+        $page2->drawPolygon(
+            $x,
+            $y,
+            Pdf\Page::SHAPE_DRAW_FILL_AND_STROKE,
+            Pdf\Page::FILL_METHOD_EVEN_ODD
+        );
 
         // Draw line
         $page2->setLineWidth(0.5)
@@ -295,7 +301,7 @@ class ProcessingTest extends \PHPUnit_Framework_TestCase
         $srcPageCount = count($pdf->pages);
 
         $outputPageSet = array();
-        foreach ($pdf->pages as $srcPage){
+        foreach ($pdf->pages as $srcPage) {
             $page = new Pdf\Page($srcPage);
 
             $outputPageSet[] = $srcPage;
@@ -341,7 +347,7 @@ class ProcessingTest extends \PHPUnit_Framework_TestCase
         $srcPageCount = count($pdf->pages);
 
         $outputPageSet = array();
-        foreach ($pdf->pages as $srcPage){
+        foreach ($pdf->pages as $srcPage) {
             $page = clone $srcPage;
 
             $page->saveGS();
@@ -397,7 +403,7 @@ class ExtendedZendPDF extends Pdf\PdfDocument
 {
     public function __get($name)
     {
-        if(isset($this->$name)) {
+        if (isset($this->$name)) {
             return $this->$name;
         }
     }
@@ -406,7 +412,7 @@ class ExtendedZendPDFPage extends Pdf\Page
 {
     public function __get($name)
     {
-        if(isset($this->$name)) {
+        if (isset($this->$name)) {
             return $this->$name;
         }
     }

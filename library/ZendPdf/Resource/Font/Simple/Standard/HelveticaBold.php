@@ -274,7 +274,9 @@ class HelveticaBold extends AbstractStandard
           0x0123 => 0x0135,   0xf0 => 0x0136, 0x017e => 0x0137, 0x0146 => 0x0138,
             0xb9 => 0x0139, 0x012b => 0x013a, 0x20ac => 0x013b);
         $this->_cmap = Cmap\AbstractCmap::cmapWithTypeData(
-            Cmap\AbstractCmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
+            Cmap\AbstractCmap::TYPE_BYTE_ENCODING_STATIC,
+            $cmapData
+        );
 
 
         /* Resource dictionary */

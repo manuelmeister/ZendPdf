@@ -46,6 +46,5 @@ class Line extends DrawingAbstract
 
         return $x1Obj->toString() . ' ' . $y1Obj->toString() . " m\n"
             .  $x2Obj->toString() . ' ' . $y2Obj->toString() . " l\n S\n";
-
     }
 }

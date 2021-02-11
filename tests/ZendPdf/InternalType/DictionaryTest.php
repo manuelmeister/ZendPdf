@@ -99,8 +99,10 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         $srcArray['Text'] = new InternalType\StringObject('some text');
         $srcArray['BinaryText'] = new InternalType\BinaryStringObject("\x01\x02\x00\xff");
         $dictionaryObj = new InternalType\DictionaryObject($srcArray);
-        $this->assertEquals($dictionaryObj->toString(),
-                            '<</Bool false /Number 100.426 /Name /MyName /Text (some text) /BinaryText <010200FF> >>');
+        $this->assertEquals(
+            $dictionaryObj->toString(),
+            '<</Bool false /Number 100.426 /Name /MyName /Text (some text) /BinaryText <010200FF> >>'
+        );
     }
 
     public function testAdd()
@@ -110,8 +112,9 @@ class DictionaryTest extends \PHPUnit_Framework_TestCase
         $dictionaryObj->add(new InternalType\NameObject('Var2'), new InternalType\NumericObject(100.426));
         $dictionaryObj->add(new InternalType\NameObject('Var3'), new InternalType\NameObject('MyName'));
         $dictionaryObj->add(new InternalType\NameObject('Var4'), new InternalType\StringObject('some text'));
-        $this->assertEquals($dictionaryObj->toString(),
-                            '<</Var1 false /Var2 100.426 /Var3 /MyName /Var4 (some text) >>');
+        $this->assertEquals(
+            $dictionaryObj->toString(),
+            '<</Var1 false /Var2 100.426 /Var3 /MyName /Var4 (some text) >>'
+        );
     }
-
 }

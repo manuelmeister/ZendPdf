@@ -271,11 +271,13 @@ abstract class AbstractOutline implements
      * @param SplObjectStorage $processedOutlines  List of already processed outlines
      * @return \ZendPdf\InternalType\AbstractTypeObject
      */
-    abstract public function dumpOutline(ObjectFactory $factory,
-                                                       $updateNavigation,
-                       InternalType\AbstractTypeObject $parent,
-                       InternalType\AbstractTypeObject $prev = null,
-                                     \SplObjectStorage $processedOutlines = null);
+    abstract public function dumpOutline(
+        ObjectFactory $factory,
+        $updateNavigation,
+        InternalType\AbstractTypeObject $parent,
+        InternalType\AbstractTypeObject $prev = null,
+        \SplObjectStorage $processedOutlines = null
+    );
 
 
     ////////////////////////////////////////////////////////////////////////

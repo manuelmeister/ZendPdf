@@ -166,10 +166,10 @@ class Page
      */
     protected $_fontSize;
 
-	/**
-	 * @var float
-	 */
-	protected $_characterSpacing = 0.0;
+    /**
+     * @var float
+     */
+    protected $_characterSpacing = 0.0;
 
     /**
      * Object constructor.
@@ -213,9 +213,10 @@ class Page
      */
     public function __construct($param1, $param2 = null, $param3 = null)
     {
-        if (($param1 instanceof InternalType\IndirectObjectReference ||
+        if ((
+            $param1 instanceof InternalType\IndirectObjectReference ||
              $param1 instanceof InternalType\IndirectObject
-            ) &&
+        ) &&
             $param1->getType() == InternalType\AbstractTypeObject::TYPE_DICTIONARY &&
             $param2 instanceof ObjectFactory &&
             $param3 === null
@@ -299,7 +300,7 @@ class Page
             }
 
             $pageDim = explode(':', $param1);
-            if(count($pageDim) == 2  ||  count($pageDim) == 3) {
+            if (count($pageDim) == 2  ||  count($pageDim) == 3) {
                 $pageWidth  = $pageDim[0];
                 $pageHeight = $pageDim[1];
             } else {
@@ -312,7 +313,6 @@ class Page
             /**
              * @todo support of pagesize recalculation to "default user space units"
              */
-
         } elseif (is_numeric($param1) && is_numeric($param2) &&
                    ($param3 === null || $param3 instanceof ObjectFactory)) {
             if ($param3 !== null) {
@@ -325,7 +325,6 @@ class Page
             $this->_safeGS   = true; /** New page created. That's users App responsibility to track GS changes */
             $pageWidth  = $param1;
             $pageHeight = $param2;
-
         } else {
             throw new Exception\BadMethodCallException('Unrecognized method signature, wrong number of arguments or wrong argument types.');
         }
@@ -418,9 +417,11 @@ class Page
         // results of clonePage() operation (other resources are still shared)
         $dictionary = new InternalType\DictionaryObject();
         foreach ($this->_pageDictionary->getKeys() as $key) {
-            $dictionary->$key = $this->_pageDictionary->$key->makeClone($factory,
-                                                                        $processed,
-                                                                        InternalType\AbstractTypeObject::CLONE_MODE_SKIP_PAGES);
+            $dictionary->$key = $this->_pageDictionary->$key->makeClone(
+                $factory,
+                $processed,
+                InternalType\AbstractTypeObject::CLONE_MODE_SKIP_PAGES
+            );
         }
 
         $this->_pageDictionary = $factory->newObject($dictionary);
@@ -446,9 +447,11 @@ class Page
         // results of clonePage() operation (other resources are still shared)
         $dictionary = new InternalType\DictionaryObject();
         foreach ($this->_pageDictionary->getKeys() as $key) {
-            $dictionary->$key = $this->_pageDictionary->$key->makeClone($factory,
-                                                                        $processed,
-                                                                        InternalType\AbstractTypeObject::CLONE_MODE_SKIP_PAGES);
+            $dictionary->$key = $this->_pageDictionary->$key->makeClone(
+                $factory,
+                $processed,
+                InternalType\AbstractTypeObject::CLONE_MODE_SKIP_PAGES
+            );
         }
 
         $clonedPage = new Page($factory->newObject($dictionary), $factory);
@@ -670,14 +673,15 @@ class Page
         return $this;
     }
 
-	/**
-	 * Sets the character spacing.
-	 *
-	 * @param float $characterSpacing
-	 */
-	public function setCharacterSpacing($characterSpacing) {
-		$this->_characterSpacing = $characterSpacing;
-	}
+    /**
+     * Sets the character spacing.
+     *
+     * @param float $characterSpacing
+     */
+    public function setCharacterSpacing($characterSpacing)
+    {
+        $this->_characterSpacing = $characterSpacing;
+    }
 
     /**
      * Set the transparancy
@@ -786,7 +790,7 @@ class Page
             $fontDictionary = $fontResources->$fontResourceName;
 
             if (! ($fontDictionary instanceof InternalType\IndirectObjectReference  ||
-                   $fontDictionary instanceof InternalType\IndirectObject) ) {
+                   $fontDictionary instanceof InternalType\IndirectObject)) {
                 throw new Exception\CorruptedPdfException('Font dictionary has to be an indirect object or object reference.');
             }
 
@@ -834,7 +838,7 @@ class Page
             $fontDictionary = $fontResources->$fontResourceName;
 
             if (! ($fontDictionary instanceof InternalType\IndirectObjectReference  ||
-                   $fontDictionary instanceof InternalType\IndirectObject) ) {
+                   $fontDictionary instanceof InternalType\IndirectObject)) {
                 throw new Exception\CorruptedPdfException('Font dictionary has to be an indirect object or object reference.');
             }
 
@@ -876,14 +880,15 @@ class Page
         return $this->_fontSize;
     }
 
-	/**
-	 * Gets the character spacing.
-	 *
-	 * @return float
-	 */
-	public function getCharacterSpacing() {
-		return $this->_characterSpacing;
-	}
+    /**
+     * Gets the character spacing.
+     *
+     * @return float
+     */
+    public function getCharacterSpacing()
+    {
+        return $this->_characterSpacing;
+    }
 
     /**
      * Return the style, applied to the page.
@@ -944,9 +949,14 @@ class Page
      */
     public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null)
     {
-        $this->clipEllipse($x - $radius, $y - $radius,
-                           $x + $radius, $y + $radius,
-                           $startAngle, $endAngle);
+        $this->clipEllipse(
+            $x - $radius,
+            $y - $radius,
+            $x + $radius,
+            $y + $radius,
+            $startAngle,
+            $endAngle
+        );
 
         return $this;
     }
@@ -990,8 +1000,12 @@ class Page
         $yC = new InternalType\NumericObject($y);
 
         if ($startAngle !== null) {
-            if ($startAngle != 0) { $startAngle = fmod($startAngle, M_PI*2); }
-            if ($endAngle   != 0) { $endAngle   = fmod($endAngle,   M_PI*2); }
+            if ($startAngle != 0) {
+                $startAngle = fmod($startAngle, M_PI*2);
+            }
+            if ($endAngle   != 0) {
+                $endAngle   = fmod($endAngle, M_PI*2);
+            }
 
             if ($startAngle > $endAngle) {
                 $endAngle += M_PI*2;
@@ -1001,7 +1015,7 @@ class Page
             $clipSectors = (int)ceil(($endAngle - $startAngle)/M_PI_4);
             $clipRadius  = max($x2 - $x1, $y2 - $y1);
 
-            for($count = 0; $count <= $clipSectors; $count++) {
+            for ($count = 0; $count <= $clipSectors; $count++) {
                 $pAngle = $startAngle + ($endAngle - $startAngle)*$count/(float)$clipSectors;
 
                 $pX = new InternalType\NumericObject($x + cos($pAngle)*$clipRadius);
@@ -1145,11 +1159,17 @@ class Page
      * @param mixed $param6
      * @return \ZendPdf\Page
      */
-    public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null)
+    public function drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null)
     {
-        $this->drawEllipse($x - $radius, $y - $radius,
-                           $x + $radius, $y + $radius,
-                           $param4, $param5, $param6);
+        $this->drawEllipse(
+            $x - $radius,
+            $y - $radius,
+            $x + $radius,
+            $y + $radius,
+            $param4,
+            $param5,
+            $param6
+        );
 
         return $this;
     }
@@ -1266,11 +1286,11 @@ class Page
      * @return \ZendPdf\Page
      */
     public function drawPolygon(
-                                $x,
-                                $y,
-                                $fillType = Polygon::DRAW_FILL_AND_STROKE,
-                                $fillMethod = Polygon::FILL_METHOD_NON_ZERO_WINDING)
-    {
+        $x,
+        $y,
+        $fillType = Polygon::DRAW_FILL_AND_STROKE,
+        $fillMethod = Polygon::FILL_METHOD_NON_ZERO_WINDING
+    ) {
         $polygon = new Polygon($x, $y, $fillType, $fillMethod);
         $this->draw(null, null, $polygon);
         return $this;
@@ -1293,7 +1313,7 @@ class Page
      */
     public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Rectangle::DRAW_FILL_AND_STROKE)
     {
-        $rectangle = new Rectangle($x2, $y2,$fillType);
+        $rectangle = new Rectangle($x2, $y2, $fillType);
         $this->draw($x1, $y1, $rectangle);
         return $this;
     }
@@ -1318,10 +1338,15 @@ class Page
      * @param integer $fillType
      * @return \ZendPdf\Page
      */
-    public function drawRoundedRectangle($x1, $y1, $x2, $y2, $radius,
-                                         $fillType = RoundedRectangle::DRAW_FILL_AND_STROKE)
-    {
-        $roundedRectangle = new RoundedRectangle($x2, $y2, $radius,$fillType);
+    public function drawRoundedRectangle(
+        $x1,
+        $y1,
+        $x2,
+        $y2,
+        $radius,
+        $fillType = RoundedRectangle::DRAW_FILL_AND_STROKE
+    ) {
+        $roundedRectangle = new RoundedRectangle($x2, $y2, $radius, $fillType);
         $this->draw($x1, $y1, $roundedRectangle);
         return $this;
     }
@@ -1339,7 +1364,7 @@ class Page
      */
     public function drawText($text, $x, $y, $charEncoding = '')
     {
-        $simpleText = new SimpleText($text,$charEncoding);
+        $simpleText = new SimpleText($text, $charEncoding);
         $this->draw($x, $y, $simpleText);
 
         $this->_addProcSet('Text');
@@ -1347,7 +1372,7 @@ class Page
         $textObj = new InternalType\StringObject($this->_font->encodeString($text, $charEncoding));
         $xObj    = new InternalType\NumericObject($x);
         $yObj    = new InternalType\NumericObject($y);
-		$tcObj   = new InternalType\NumericObject($this->_characterSpacing);
+        $tcObj   = new InternalType\NumericObject($this->_characterSpacing);
 
         $this->_contents .= "BT\n"
                          .  $tcObj->toString() . " Tc\n"
@@ -1358,7 +1383,8 @@ class Page
         return $this;
     }
     
-    public function getLocationArray(IndirectObject $locationObj){
+    public function getLocationArray(IndirectObject $locationObj)
+    {
         /* @var $rect \ZendPdf\InternalType\ArrayObject */
         $rect = $locationObj->Rect;
         if ($rect === null) {
@@ -1397,7 +1423,7 @@ class Page
         $charEncoding = '';
         $textObj = new InternalType\StringObject($this->_font->encodeString($text, $charEncoding));
         
-        // get location array 
+        // get location array
         $loc = $this->getLocationArray($locationObj);
         
         // determine horizontal alignment
@@ -1532,12 +1558,12 @@ class Page
                $this->_pageDictionary->MediaBox->items[0]->value;
     }
 
-     /**
-     * Close the path by drawing a straight line back to it's beginning.
-     *
-     * @throws \ZendPdf\Exception\ExceptionInterface
-     * @return \ZendPdf\Page
-     */
+    /**
+    * Close the path by drawing a straight line back to it's beginning.
+    *
+    * @throws \ZendPdf\Exception\ExceptionInterface
+    * @return \ZendPdf\Page
+    */
     public function pathClose()
     {
         /** @todo implementation */

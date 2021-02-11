@@ -65,5 +65,4 @@ class TrueType extends AbstractCidFont
         $cidToGidMap->dictionary->Filter = new InternalType\NameObject('FlateDecode');
         $this->_resource->CIDToGIDMap = $cidToGidMap;
     }
-
 }

@@ -126,9 +126,12 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
             $x[] = 140 + 25*cos(3*M_PI_4*$count);
             $y[] = 375 + 25*sin(3*M_PI_4*$count);
         }
-        $page2->drawPolygon($x, $y,
-                            Pdf\Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            Pdf\Page::FILL_METHOD_EVEN_ODD);
+        $page2->drawPolygon(
+            $x,
+            $y,
+            Pdf\Page::SHAPE_DRAW_FILL_AND_STROKE,
+            Pdf\Page::FILL_METHOD_EVEN_ODD
+        );
 
         // Draw line
         $page2->setLineWidth(0.5)
@@ -189,9 +192,12 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
             $x[] = 140 + 25*cos(3*M_PI_4*$count);
             $y[] = 375 + 25*sin(3*M_PI_4*$count);
         }
-        $page3->drawPolygon($x, $y,
-                            Pdf\Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            Pdf\Page::FILL_METHOD_EVEN_ODD);
+        $page3->drawPolygon(
+            $x,
+            $y,
+            Pdf\Page::SHAPE_DRAW_FILL_AND_STROKE,
+            Pdf\Page::FILL_METHOD_EVEN_ODD
+        );
 
         // Draw line
         $page3->setLineWidth(0.5)
@@ -311,7 +317,7 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
             $page->drawText("'The quick brown fox jumps over the lazy dog'", 100, 360);
 
             $ascent = $font->getAscent();
-            $this->assertTrue( abs(1 - $font->getCoveredPercentage('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxwz')) < 0.00001 );
+            $this->assertTrue(abs(1 - $font->getCoveredPercentage('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxwz')) < 0.00001);
             $descent = $font->getDescent();
 
             $font->getFontName(Pdf\Font::NAME_FULL, 'en');
@@ -364,7 +370,7 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
                  ->drawText($example, 100, 360, 'UTF-16BE');
 
             $ascent = $font->getAscent();
-            $this->assertTrue( abs(1 - $font->getCoveredPercentage($example, 'UTF-16BE')) < 0.00001 );
+            $this->assertTrue(abs(1 - $font->getCoveredPercentage($example, 'UTF-16BE')) < 0.00001);
             $descent = $font->getDescent();
 
             $font->getFontName(Pdf\Font::NAME_FULL, 'en');
@@ -423,7 +429,7 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
                  ->drawText("'The quick brown fox jumps over the lazy dog'", 100, 360);
 
             $ascent = $font->getAscent();
-            $this->assertTrue( abs(1 - $font->getCoveredPercentage('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxwz')) < 0.00001 );
+            $this->assertTrue(abs(1 - $font->getCoveredPercentage('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxwz')) < 0.00001);
             $descent = $font->getDescent();
 
             $font->getFontName(Pdf\Font::NAME_FULL, 'en');
@@ -532,7 +538,8 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $this->assertEquals(array(Pdf\Font::FONT_COURIER,
+        $this->assertEquals(
+            array(Pdf\Font::FONT_COURIER,
                                   Pdf\Font::FONT_HELVETICA_BOLD,
                                   Pdf\Font::FONT_TIMES_BOLD_ITALIC,
                                   'BitstreamVeraSans-Bold',
@@ -545,7 +552,8 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
                                   'BitstreamVeraSerif-Bold',
                                   'BitstreamVeraSerif-Roman',
                                   'BitstreamVeraSans-Roman'),
-                            $fontNames);
+            $fontNames
+        );
 
         $pdf1->pages[] = ($page = $pdf1->newPage(Pdf\Page::SIZE_A4));
         $yPosition = 700;
@@ -559,7 +567,8 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
         foreach ($pdf1->extractFonts() as $font) {
             $fontNames1[] = $font->getFontName(Pdf\Font::NAME_POSTSCRIPT, 'en', 'UTF-8');
         }
-        $this->assertEquals(array(Pdf\Font::FONT_COURIER,
+        $this->assertEquals(
+            array(Pdf\Font::FONT_COURIER,
                                   Pdf\Font::FONT_HELVETICA_BOLD,
                                   Pdf\Font::FONT_TIMES_BOLD_ITALIC,
                                   'BitstreamVeraSans-Bold',
@@ -572,7 +581,8 @@ class DrawingTest extends \PHPUnit_Framework_TestCase
                                   'BitstreamVeraSerif-Bold',
                                   'BitstreamVeraSerif-Roman',
                                   'BitstreamVeraSans-Roman'),
-                            $fontNames1);
+            $fontNames1
+        );
 
         $page = reset($pdf1->pages);
         $font = $page->extractFont(Pdf\Font::FONT_COURIER);

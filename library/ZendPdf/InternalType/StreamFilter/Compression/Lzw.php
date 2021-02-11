@@ -34,7 +34,7 @@ class Lzw extends AbstractCompression
             $earlyChange = $params['EarlyChange'];
 
             if ($earlyChange != 0  &&  $earlyChange != 1) {
-                throw new Exception\CorruptedPdfException('Invalid value of \'EarlyChange\' decode param - ' . $earlyChange . '.' );
+                throw new Exception\CorruptedPdfException('Invalid value of \'EarlyChange\' decode param - ' . $earlyChange . '.');
             }
             return $earlyChange;
         } else {

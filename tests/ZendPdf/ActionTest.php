@@ -163,8 +163,10 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         $action = Action\AbstractAction::load($dictionary);
 
         $actionsCount = 0;
-        $iterator = new \RecursiveIteratorIterator(new Util\RecursivelyIteratableObjectsContainer(array($action)),
-                                                  \RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new \RecursiveIteratorIterator(
+            new Util\RecursivelyIteratableObjectsContainer(array($action)),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
         foreach ($iterator as $chainedAction) {
             $actionsCount++;
         }
@@ -296,8 +298,10 @@ class ActionTest extends \PHPUnit_Framework_TestCase
             unset($action->next[$deletionCandidateKeys[$id]]);
         }
         $actionsCount = 0;
-        $iterator = new \RecursiveIteratorIterator(new Util\RecursivelyIteratableObjectsContainer(array($action)),
-                                                  \RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new \RecursiveIteratorIterator(
+            new Util\RecursivelyIteratableObjectsContainer(array($action)),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
         foreach ($iterator as $chainedAction) {
             $actionsCount++;
         }
@@ -309,7 +313,8 @@ class ActionTest extends \PHPUnit_Framework_TestCase
             '<</Type /Action '
             . '/S /Thread '
             . '/D (NamedDestination 2) '
-            . '/Next [1 0 R 2 0 R 3 0 R 4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R 11 0 R 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R 17 0 R ] >>');
+            . '/Next [1 0 R 2 0 R 3 0 R 4 0 R 5 0 R 6 0 R 7 0 R 8 0 R 9 0 R 10 0 R 11 0 R 12 0 R 13 0 R 14 0 R 15 0 R 16 0 R 17 0 R ] >>'
+        );
     }
 
     public function testCreate()
@@ -319,8 +324,10 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
         $action1->dumpAction(new ObjectFactory(1));
 
-        $this->assertEquals($action1->getResource()->toString(),
-                            '<</Type /Action /S /GoTo /D (SomeNamedDestination) /Next 1 0 R >>');
+        $this->assertEquals(
+            $action1->getResource()->toString(),
+            '<</Type /Action /S /GoTo /D (SomeNamedDestination) /Next 1 0 R >>'
+        );
     }
 
     public function testCreate1()
@@ -335,8 +342,10 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
         $action->dumpAction(new ObjectFactory(1));
 
-        $this->assertEquals($action->getResource()->toString(),
-                            '<</Type /Action /S /GoTo /D [5 0 R /Fit ] >>');
+        $this->assertEquals(
+            $action->getResource()->toString(),
+            '<</Type /Action /S /GoTo /D [5 0 R /Fit ] >>'
+        );
     }
 
     public function testGetDestination()
@@ -389,7 +398,6 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('\ZendPdf\Exception\CorruptedPdfException', 'URI action dictionary entry is required');
         $action = Action\AbstractAction::load($dictionary);
-
     }
 
     public function testActionURICreate()
@@ -398,8 +406,10 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($action instanceof Action\URI);
 
-        $this->assertEquals($action->getResource()->toString(),
-                            '<</Type /Action /S /URI /URI (http://somehost/) >>');
+        $this->assertEquals(
+            $action->getResource()->toString(),
+            '<</Type /Action /S /URI /URI (http://somehost/) >>'
+        );
     }
 
     public function testActionURIGettersSetters()
@@ -415,13 +425,17 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
         $action->setIsMap(true);
         $this->assertEquals($action->getIsMap(), true);
-        $this->assertEquals($action->getResource()->toString(),
-                            '<</Type /Action /S /URI /URI (http://another_host/) /IsMap true >>');
+        $this->assertEquals(
+            $action->getResource()->toString(),
+            '<</Type /Action /S /URI /URI (http://another_host/) /IsMap true >>'
+        );
 
         $action->setIsMap(false);
         $this->assertEquals($action->getIsMap(), false);
-        $this->assertEquals($action->getResource()->toString(),
-                            '<</Type /Action /S /URI /URI (http://another_host/) >>');
+        $this->assertEquals(
+            $action->getResource()->toString(),
+            '<</Type /Action /S /URI /URI (http://another_host/) >>'
+        );
     }
 
     /**
