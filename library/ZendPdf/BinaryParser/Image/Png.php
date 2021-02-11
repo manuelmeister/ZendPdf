@@ -21,100 +21,100 @@ use ZendPdf\Exception;
  */
 class Png extends AbstractImage
 {
-     protected $_isPNG;
-     protected $_width;
-     protected $_height;
-     protected $_bits;
-     protected $_color;
-     protected $_compression;
-     protected $_preFilter;
-     protected $_interlacing;
+    protected $_isPNG;
+    protected $_width;
+    protected $_height;
+    protected $_bits;
+    protected $_color;
+    protected $_compression;
+    protected $_preFilter;
+    protected $_interlacing;
 
-     protected $_imageData;
-     protected $_paletteData;
-     protected $_transparencyData;
+    protected $_imageData;
+    protected $_paletteData;
+    protected $_transparencyData;
 
     /**** Public Interface ****/
 
-     public function getWidth()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_width;
-     }
+    public function getWidth()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_width;
+    }
 
-     public function getHeight()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_width;
-     }
+    public function getHeight()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_width;
+    }
 
-     public function getBitDepth()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_bits;
-     }
+    public function getBitDepth()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_bits;
+    }
 
-     public function getColorSpace()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_color;
-     }
+    public function getColorSpace()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_color;
+    }
 
-     public function getCompressionStrategy()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_compression;
-     }
+    public function getCompressionStrategy()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_compression;
+    }
 
-     public function getPaethFilter()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_preFilter;
-     }
+    public function getPaethFilter()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_preFilter;
+    }
 
-     public function getInterlacingMode()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_interlacing;
-     }
+    public function getInterlacingMode()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_interlacing;
+    }
 
-     public function getRawImageData()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_imageData;
-     }
+    public function getRawImageData()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_imageData;
+    }
 
-     public function getRawPaletteData()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_paletteData;
-     }
+    public function getRawPaletteData()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_paletteData;
+    }
 
-     public function getRawTransparencyData()
-     {
-          if(!$this->_isParsed) {
-               $this->parse();
-          }
-          return $this->_transparencyData;
-     }
+    public function getRawTransparencyData()
+    {
+        if (!$this->_isParsed) {
+            $this->parse();
+        }
+        return $this->_transparencyData;
+    }
 
     /* Semi-Concrete Class Implementation */
 
@@ -123,10 +123,10 @@ class Png extends AbstractImage
      */
     public function screen()
     {
-         if ($this->_isScreened) {
-             return;
-         }
-         return $this->_checkSignature();
+        if ($this->_isScreened) {
+            return;
+        }
+        return $this->_checkSignature();
     }
 
     /**
@@ -149,39 +149,39 @@ class Png extends AbstractImage
 
     protected function _parseSignature()
     {
-         $this->moveToOffset(1); //Skip the first byte (%)
-         if('PNG' != $this->readBytes(3)) {
-               $this->_isPNG = false;
-         } else {
-               $this->_isPNG = true;
-         }
+        $this->moveToOffset(1); //Skip the first byte (%)
+        if ('PNG' != $this->readBytes(3)) {
+            $this->_isPNG = false;
+        } else {
+            $this->_isPNG = true;
+        }
     }
 
     protected function _checkSignature()
     {
-         if(!isset($this->_isPNG)) {
-              $this->_parseSignature();
-         }
-         return $this->_isPNG;
+        if (!isset($this->_isPNG)) {
+            $this->_parseSignature();
+        }
+        return $this->_isPNG;
     }
 
     protected function _parseChunks()
     {
-         $this->moveToOffset(33); //Variable chunks start at the end of IHDR
+        $this->moveToOffset(33); //Variable chunks start at the end of IHDR
 
-         //Start processing chunks. If there are no more bytes to read parsing is complete.
-         $size = $this->getSize();
-         while($size - $this->getOffset() >= 8) {
-              $chunkLength = $this->readUInt(4);
-              if($chunkLength < 0 || ($chunkLength + $this->getOffset() + 4) > $size) {
-                   throw new Exception\CorruptedImageException('PNG Corrupt: Invalid Chunk Size In File.');
-              }
+        //Start processing chunks. If there are no more bytes to read parsing is complete.
+        $size = $this->getSize();
+        while ($size - $this->getOffset() >= 8) {
+            $chunkLength = $this->readUInt(4);
+            if ($chunkLength < 0 || ($chunkLength + $this->getOffset() + 4) > $size) {
+                throw new Exception\CorruptedImageException('PNG Corrupt: Invalid Chunk Size In File.');
+            }
 
-              $chunkType = $this->readBytes(4);
-              $offset = $this->getOffset();
+            $chunkType = $this->readBytes(4);
+            $offset = $this->getOffset();
 
-              //If we know how to process the chunk, do it here, else ignore the chunk and move on to the next
-              switch($chunkType) {
+            //If we know how to process the chunk, do it here, else ignore the chunk and move on to the next
+            switch ($chunkType) {
                    case 'IDAT': // This chunk may appear more than once. It contains the actual image data.
                        $this->_parseIDATChunk($offset, $chunkLength);
                        break;
@@ -199,56 +199,56 @@ class Png extends AbstractImage
 
                    //@TODO Implement the rest of the PNG chunks. (There are many not implemented here)
               }
-              if($offset + $chunkLength + 4 < $size) {
-                  $this->moveToOffset($offset + $chunkLength + 4); //Skip past the data finalizer. (Don't rely on the parse to leave the offsets correct)
-              }
-         }
-         if(empty($this->_imageData)) {
-              throw new Exception\CorruptedImageException('This PNG is corrupt. All png must contain IDAT chunks.');
-         }
+            if ($offset + $chunkLength + 4 < $size) {
+                $this->moveToOffset($offset + $chunkLength + 4); //Skip past the data finalizer. (Don't rely on the parse to leave the offsets correct)
+            }
+        }
+        if (empty($this->_imageData)) {
+            throw new Exception\CorruptedImageException('This PNG is corrupt. All png must contain IDAT chunks.');
+        }
     }
 
     protected function _parseIHDRChunk()
     {
-         $this->moveToOffset(12); //IHDR must always start at offset 12 and run for 17 bytes
-         if(!$this->readBytes(4) == 'IHDR') {
-              throw new Exception\CorruptedImageException('This PNG is corrupt. The first chunk in a PNG file must be IHDR.');
-         }
-         $this->_width = $this->readUInt(4);
-         $this->_height = $this->readUInt(4);
-         $this->_bits = $this->readInt(1);
-         $this->_color = $this->readInt(1);
-         $this->_compression = $this->readInt(1);
-         $this->_preFilter = $this->readInt(1);
-         $this->_interlacing = $this->readInt(1);
-         if($this->_interlacing != Pdf\Image::PNG_INTERLACING_DISABLED) {
-              throw new Exception\CorruptedImageException('Only non-interlaced images are currently supported.');
-         }
+        $this->moveToOffset(12); //IHDR must always start at offset 12 and run for 17 bytes
+        if (!$this->readBytes(4) == 'IHDR') {
+            throw new Exception\CorruptedImageException('This PNG is corrupt. The first chunk in a PNG file must be IHDR.');
+        }
+        $this->_width = $this->readUInt(4);
+        $this->_height = $this->readUInt(4);
+        $this->_bits = $this->readInt(1);
+        $this->_color = $this->readInt(1);
+        $this->_compression = $this->readInt(1);
+        $this->_preFilter = $this->readInt(1);
+        $this->_interlacing = $this->readInt(1);
+        if ($this->_interlacing != Pdf\Image::PNG_INTERLACING_DISABLED) {
+            throw new Exception\CorruptedImageException('Only non-interlaced images are currently supported.');
+        }
     }
 
     protected function _parseIDATChunk($chunkOffset, $chunkLength)
     {
-         $this->moveToOffset($chunkOffset);
-         if(!isset($this->_imageData)) {
-              $this->_imageData = $this->readBytes($chunkLength);
-         } else {
-              $this->_imageData .= $this->readBytes($chunkLength);
-         }
+        $this->moveToOffset($chunkOffset);
+        if (!isset($this->_imageData)) {
+            $this->_imageData = $this->readBytes($chunkLength);
+        } else {
+            $this->_imageData .= $this->readBytes($chunkLength);
+        }
     }
 
     protected function _parsePLTEChunk($chunkOffset, $chunkLength)
     {
-         $this->moveToOffset($chunkOffset);
-         $this->_paletteData = $this->readBytes($chunkLength);
+        $this->moveToOffset($chunkOffset);
+        $this->_paletteData = $this->readBytes($chunkLength);
     }
 
     protected function _parseTRNSChunk($chunkOffset, $chunkLength)
     {
-         $this->moveToOffset($chunkOffset);
+        $this->moveToOffset($chunkOffset);
 
-         //Processing of tRNS data varies dependending on the color depth
+        //Processing of tRNS data varies dependending on the color depth
 
-         switch($this->_color) {
+        switch ($this->_color) {
              case Pdf\Image::PNG_CHANNEL_GRAY:
                   $baseColor = $this->readInt(1);
                   $this->_transparencyData = array($baseColor, $baseColor);
@@ -308,8 +308,8 @@ class Png extends AbstractImage
                   */
 
                   $tmpData = $this->readBytes($chunkLength);
-                  if(($trnsIdx = strpos($tmpData, "\0")) !== false) {
-                       $this->_transparencyData = array($trnsIdx, $trnsIdx);
+                  if (($trnsIdx = strpos($tmpData, "\0")) !== false) {
+                      $this->_transparencyData = array($trnsIdx, $trnsIdx);
                   }
 
                   break;

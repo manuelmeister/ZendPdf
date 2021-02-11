@@ -13,41 +13,34 @@ define('UTF8_BOM', chr(0xEF) . chr(0xBB) . chr(0xBF));
 
 class Encoding
 {
-
     public static function detect_utf_encoding(
         $str,
         $encoding_list = null,
         $strict = false
     ) {
-
         $first3 = substr($str, 0, 3);
 
-        if ($first3 === UTF8_BOM)
-        {
+        if ($first3 === UTF8_BOM) {
             return 'UTF-8';
         }
 
         $first4 = substr($str, 0, 3);
 
-        if ($first4 === UTF32_BIG_ENDIAN_BOM)
-        {
+        if ($first4 === UTF32_BIG_ENDIAN_BOM) {
             return 'UTF-32BE';
         }
 
-        if ($first4 === UTF32_LITTLE_ENDIAN_BOM)
-        {
+        if ($first4 === UTF32_LITTLE_ENDIAN_BOM) {
             return 'UTF-32LE';
         }
 
         $first2 = substr($str, 0, 2);
 
-        if ($first2 === UTF16_BIG_ENDIAN_BOM)
-        {
+        if ($first2 === UTF16_BIG_ENDIAN_BOM) {
             return 'UTF-16BE';
         }
 
-        if ($first2 === UTF16_LITTLE_ENDIAN_BOM)
-        {
+        if ($first2 === UTF16_LITTLE_ENDIAN_BOM) {
             return 'UTF-16LE';
         }
 

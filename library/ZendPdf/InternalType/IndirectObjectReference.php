@@ -73,15 +73,16 @@ class IndirectObjectReference extends AbstractTypeObject
      * @param \ZendPdf\ObjectFactory $factory
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-    public function __construct($objNum,
-                                $genNum = 0,
-                                $context,
-                                Pdf\ObjectFactory $factory)
-    {
-        if ( !(is_integer($objNum) && $objNum > 0) ) {
+    public function __construct(
+        $objNum,
+        $genNum = 0,
+        $context,
+        Pdf\ObjectFactory $factory
+    ) {
+        if (!(is_integer($objNum) && $objNum > 0)) {
             throw new Exception\RuntimeException('Object number must be positive integer');
         }
-        if ( !(is_integer($genNum) && $genNum >= 0) ) {
+        if (!(is_integer($genNum) && $genNum >= 0)) {
             throw new Exception\RuntimeException('Generation number must be non-negative integer');
         }
         if ($context !== null && !($context instanceof IndirectObjectReference\Context)) {
@@ -152,12 +153,12 @@ class IndirectObjectReference extends AbstractTypeObject
     {
         if (($obj = $this->_factory->fetchObject($this->_objNum . ' ' . $this->_genNum)) === null) {
             $obj = $this->_context->getParser()->getObject(
-                           $this->_context->getRefTable()->getOffset($this->_objNum . ' ' . $this->_genNum . ' R'),
-                           $this->_context
-                                                          );
+                $this->_context->getRefTable()->getOffset($this->_objNum . ' ' . $this->_genNum . ' R'),
+                $this->_context
+            );
         }
 
-        if ($obj === null ) {
+        if ($obj === null) {
             $this->_ref = new NullObject();
             return;
         }

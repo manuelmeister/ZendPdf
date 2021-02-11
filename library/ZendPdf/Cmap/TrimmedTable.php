@@ -68,7 +68,6 @@ class TrimmedTable extends AbstractCmap
     {
         $glyphNumbers = array();
         foreach ($characterCodes as $key => $characterCode) {
-
             if (($characterCode < $this->_startCode) || ($characterCode > $this->_endCode)) {
                 $glyphNumbers[$key] = AbstractCmap::MISSING_CHARACTER_GLYPH;
                 continue;
@@ -76,7 +75,6 @@ class TrimmedTable extends AbstractCmap
 
             $glyphIndex = $characterCode - $this->_startCode;
             $glyphNumbers[$key] = $this->_glyphIndexArray[$glyphIndex];
-
         }
         return $glyphNumbers;
     }

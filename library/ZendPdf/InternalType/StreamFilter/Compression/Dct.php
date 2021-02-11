@@ -23,76 +23,76 @@ use ImagickPixel;
  */
 class Dct extends AbstractCompression
 {
-	/**
-	 * Get EarlyChange decode param value
-	 *
-	 * @param array $params
-	 *
-	 * @return integer
-	 * @throws \ZendPdf\Exception\ExceptionInterface
-	 */
-	private static function _getColorTransformValue( $params )
-	{
-		if (isset($params[ 'ColorTransform' ])) {
-			$colorTransform = $params[ 'ColorTransform' ];
+    /**
+     * Get EarlyChange decode param value
+     *
+     * @param array $params
+     *
+     * @return integer
+     * @throws \ZendPdf\Exception\ExceptionInterface
+     */
+    private static function _getColorTransformValue($params)
+    {
+        if (isset($params[ 'ColorTransform' ])) {
+            $colorTransform = $params[ 'ColorTransform' ];
 
-			if ($colorTransform != 0 && $colorTransform != 1) {
-				throw new Exception\CorruptedPdfException('Invalid value of \'ColorTransform\' decode param - ' .
-				                                          $colorTransform . '.');
-			}
+            if ($colorTransform != 0 && $colorTransform != 1) {
+                throw new Exception\CorruptedPdfException('Invalid value of \'ColorTransform\' decode param - ' .
+                                                          $colorTransform . '.');
+            }
 
-			return $colorTransform;
-		} else {
-			return 0;
-		}
-	}
+            return $colorTransform;
+        } else {
+            return 0;
+        }
+    }
 
-	/**
-	 * Encode data
-	 *
-	 * @param string $data
-	 * @param array  $params
-	 *
-	 * @return string
-	 * @throws \ZendPdf\Exception\ExceptionInterface
-	 */
-	public static function encode( $data, $params = NULL )
-	{
-		throw new Exception\NotImplementedException('Not implemented yet');
-	}
+    /**
+     * Encode data
+     *
+     * @param string $data
+     * @param array  $params
+     *
+     * @return string
+     * @throws \ZendPdf\Exception\ExceptionInterface
+     */
+    public static function encode($data, $params = null)
+    {
+        throw new Exception\NotImplementedException('Not implemented yet');
+    }
 
-	/**
-	 * Decode data
-	 *
-	 * @param string $data
-	 * @param array  $params
-	 *
-	 * @return string
-	 * @throws \ZendPdf\Exception\ExceptionInterface
-	 */
-	public static function decode( $data, $params = NULL )
-	{
-		$imagickProcessor = new Imagick();
-		$imagickProcessor->readimageblob( $data );
+    /**
+     * Decode data
+     *
+     * @param string $data
+     * @param array  $params
+     *
+     * @return string
+     * @throws \ZendPdf\Exception\ExceptionInterface
+     */
+    public static function decode($data, $params = null)
+    {
+        $imagickProcessor = new Imagick();
+        $imagickProcessor->readimageblob($data);
 
-		if ($params !== NULL && self::_getColorTransformValue( $params )) {
-			$imagickProcessor->setimagecolorspace(Imagick::COLORSPACE_RGB);
-		}
-		$pixelIterator = $imagickProcessor->getpixeliterator();
+        if ($params !== null && self::_getColorTransformValue($params)) {
+            $imagickProcessor->setimagecolorspace(Imagick::COLORSPACE_RGB);
+        }
+        $pixelIterator = $imagickProcessor->getpixeliterator();
 
-		$output = "";
+        $output = "";
 
-		foreach ($pixelIterator as $row) {
-			foreach ($row as $pixel) {
-				if ($pixel instanceof ImagickPixel) {
-					$color = $pixel->getColor();
-					$output .= chr( $color[ 'r' ] );
-					$output .= chr( $color[ 'g' ] );
-					$output .= chr( $color[ 'b' ] );
-				}
-			}
-		}
+        foreach ($pixelIterator as $row) {
+            foreach ($row as $pixel) {
+                if ($pixel instanceof ImagickPixel) {
+                    $color = $pixel->getColor();
+                    $output .= chr($color[ 'r' ]);
+                    $output .= chr($color[ 'g' ]);
+                    $output .= chr($color[ 'b' ]);
+                }
+            }
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 }

@@ -19,7 +19,8 @@ use ZendPdf\InternalType\ArrayObject;
 use ZendPdf\InternalType\StringObject;
 use ZendPdf\InternalType\AcroFormObject\FormToken;
 
-class AcroFormFieldWorker {
+class AcroFormFieldWorker
+{
     
     /**
      * Determine if the AcroFormObject should process this incoming field or leave it as-is.
@@ -163,5 +164,4 @@ class AcroFormFieldWorker {
         // add new field usage to the field's Kids array
         $sharedField->Kids->items[] = new IndirectObjectReference($pageField->getObjNum(), $pageField->getGenNum(), null, $pageField->getFactory());
     }
-    
 }

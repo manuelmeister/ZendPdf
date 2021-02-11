@@ -343,12 +343,13 @@ class Loaded extends AbstractOutline
      * @return \ZendPdf\InternalType\AbstractTypeObject
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-    public function dumpOutline(ObjectFactory $factory,
-                                              $updateNavigation,
-              InternalType\AbstractTypeObject $parent,
-              InternalType\AbstractTypeObject $prev = null,
-                            \SplObjectStorage $processedOutlines = null)
-    {
+    public function dumpOutline(
+        ObjectFactory $factory,
+        $updateNavigation,
+        InternalType\AbstractTypeObject $parent,
+        InternalType\AbstractTypeObject $prev = null,
+        \SplObjectStorage $processedOutlines = null
+    ) {
         if ($processedOutlines === null) {
             $processedOutlines = new \SplObjectStorage();
         }
@@ -366,7 +367,7 @@ class Loaded extends AbstractOutline
         if (count($this->_originalChildOutlines) != count($this->childOutlines)) {
             // If original and current children arrays have different size then children list was updated
             $updateChildNavigation = true;
-        } elseif ( !(array_keys($this->_originalChildOutlines) === array_keys($this->childOutlines)) ) {
+        } elseif (!(array_keys($this->_originalChildOutlines) === array_keys($this->childOutlines))) {
             // If original and current children arrays have different keys (with a glance to an order) then children list was updated
             $updateChildNavigation = true;
         } else {
@@ -421,7 +422,7 @@ class Loaded extends AbstractOutline
 
     public function dump($level = 0)
     {
-        printf(":%3d:%s:%s:%s%s  :\n", count($this->childOutlines),$this->isItalic()? 'i':' ', $this->isBold()? 'b':' ', str_pad('', 4*$level), $this->getTitle());
+        printf(":%3d:%s:%s:%s%s  :\n", count($this->childOutlines), $this->isItalic()? 'i':' ', $this->isBold()? 'b':' ', str_pad('', 4*$level), $this->getTitle());
 
         if ($this->isOpen()  ||  true) {
             foreach ($this->childOutlines as $child) {

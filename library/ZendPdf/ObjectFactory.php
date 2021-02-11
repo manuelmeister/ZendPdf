@@ -205,7 +205,7 @@ class ObjectFactory
      */
     public function attach(ObjectFactory $factory)
     {
-        if ( $factory === $this || isset($this->_attachedFactories[$factory->getId()])) {
+        if ($factory === $this || isset($this->_attachedFactories[$factory->getId()])) {
             /**
              * Don't attach factory twice.
              * We do not check recusively because of nature of attach operation
@@ -369,14 +369,18 @@ class ObjectFactory
         $result = array();
         foreach ($this->_modifiedObjects as $objNum => $obj) {
             if ($this->_removedObjects->contains($obj)) {
-                            $result[$objNum+$shift] = new UpdateInfoContainer($objNum + $shift,
-                                                                              $obj->getGenNum()+1,
-                                                                              true);
+                $result[$objNum+$shift] = new UpdateInfoContainer(
+                    $objNum + $shift,
+                    $obj->getGenNum()+1,
+                    true
+                );
             } else {
-                $result[$objNum+$shift] = new UpdateInfoContainer($objNum + $shift,
-                                                                  $obj->getGenNum(),
-                                                                  false,
-                                                                  $obj->dump($rootFactory));
+                $result[$objNum+$shift] = new UpdateInfoContainer(
+                    $objNum + $shift,
+                    $obj->getGenNum(),
+                    false,
+                    $obj->dump($rootFactory)
+                );
             }
         }
 

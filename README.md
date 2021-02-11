@@ -9,7 +9,7 @@ Master: [![Build Status](https://travis-ci.com/mentax/ZendPdf.svg?branch=master)
 Run the command:
 
 ```bash
-composer require "mentax/zendpdf": "^2.0.5"
+composer require "mentax/zendpdf": "^2.1.0"
 ```
 
 At that point, follow the instructions in the documentation folder for actual

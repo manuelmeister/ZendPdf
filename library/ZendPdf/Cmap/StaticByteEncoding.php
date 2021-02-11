@@ -43,5 +43,4 @@ class StaticByteEncoding extends ByteEncoding
         }
         $this->_glyphIndexArray = $cmapData;
     }
-
 }

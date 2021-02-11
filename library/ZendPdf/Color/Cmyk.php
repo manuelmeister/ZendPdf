@@ -64,17 +64,33 @@ class Cmyk implements ColorInterface
      */
     public function __construct($c, $m, $y, $k)
     {
-        if ($c < 0) { $c = 0; }
-        if ($c > 1) { $c = 1; }
+        if ($c < 0) {
+            $c = 0;
+        }
+        if ($c > 1) {
+            $c = 1;
+        }
 
-        if ($m < 0) { $m = 0; }
-        if ($m > 1) { $m = 1; }
+        if ($m < 0) {
+            $m = 0;
+        }
+        if ($m > 1) {
+            $m = 1;
+        }
 
-        if ($y < 0) { $y = 0; }
-        if ($y > 1) { $y = 1; }
+        if ($y < 0) {
+            $y = 0;
+        }
+        if ($y > 1) {
+            $y = 1;
+        }
 
-        if ($k < 0) { $k = 0; }
-        if ($k > 1) { $k = 1; }
+        if ($k < 0) {
+            $k = 0;
+        }
+        if ($k > 1) {
+            $k = 1;
+        }
 
         $this->_c = new InternalType\NumericObject($c);
         $this->_m = new InternalType\NumericObject($m);

@@ -95,15 +95,15 @@ class ArrayTest extends \PHPUnit_Framework_TestCase
         $arrayObj->add(new InternalType\NumericObject(100.426));
         $arrayObj->add(new InternalType\NameObject('MyName'));
         $arrayObj->add(new InternalType\StringObject('some text'));
-        $this->assertEquals($arrayObj->toString(), '[false 100.426 /MyName (some text) ]' );
+        $this->assertEquals($arrayObj->toString(), '[false 100.426 /MyName (some text) ]');
     }
 
     public function testAddBadArgument()
     {
-	    $this->setExpectedException(
-		    '\ZendPdf\Exception\RuntimeException',
-		    'Array elements must be \ZendPdf\InternalType\AbstractTypeObject objects.'
-	    );
+        $this->setExpectedException(
+            '\ZendPdf\Exception\RuntimeException',
+            'Array elements must be \ZendPdf\InternalType\AbstractTypeObject objects.'
+        );
 
         $arrayObj = new InternalType\ArrayObject();
         $arrayObj->add(100.426);

@@ -82,7 +82,7 @@ class RunLength implements StreamFilterInterface
         $output = '';
         $offset = 0;
 
-        while($offset < $dataLength) {
+        while ($offset < $dataLength) {
             $length = ord($data[$offset]);
 
             $offset++;

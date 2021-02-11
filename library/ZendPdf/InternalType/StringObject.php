@@ -247,5 +247,4 @@ class StringObject extends AbstractTypeObject
 
         return implode($outEntries);
     }
-
 }

@@ -158,7 +158,6 @@ class SegmentToDelta extends AbstractCmap
                  * glyph number.
                  */
                 $glyphNumbers[$key] = ($characterCode + $this->_segmentTableIdDeltas[$subtableIndex]) % 65536;
-
             } else {
                 /* This segment relies on the glyph index array to determine the
                  * glyph number. The calculation below determines the correct
@@ -172,9 +171,7 @@ class SegmentToDelta extends AbstractCmap
                                $this->_segmentTableIdRangeOffsets[$subtableIndex] - $this->_segmentCount +
                                $subtableIndex - 1);
                 $glyphNumbers[$key] = $this->_glyphIndexArray[$glyphIndex];
-
             }
-
         }
         return $glyphNumbers;
     }

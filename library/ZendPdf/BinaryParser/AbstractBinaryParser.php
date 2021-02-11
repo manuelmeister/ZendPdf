@@ -169,12 +169,12 @@ abstract class AbstractBinaryParser
 
     public function getOffset()
     {
-       return $this->_dataSource->getOffset();
+        return $this->_dataSource->getOffset();
     }
 
     public function getSize()
     {
-       return $this->_dataSource->getSize();
+        return $this->_dataSource->getSize();
     }
 
     /**
@@ -344,9 +344,11 @@ abstract class AbstractBinaryParser
      * @return float
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-    public function readFixed($mantissaBits, $fractionBits,
-                              $byteOrder = self::BYTE_ORDER_BIG_ENDIAN)
-    {
+    public function readFixed(
+        $mantissaBits,
+        $fractionBits,
+        $byteOrder = self::BYTE_ORDER_BIG_ENDIAN
+    ) {
         $bitsToRead = $mantissaBits + $fractionBits;
         if (($bitsToRead % 8) !== 0) {
             throw new Exception\BinaryParserException('Fixed-point numbers are whole bytes');
@@ -380,10 +382,11 @@ abstract class AbstractBinaryParser
      * @return string
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-    public function readStringUTF16($byteCount,
-                                    $byteOrder = self::BYTE_ORDER_BIG_ENDIAN,
-                                    $characterSet = '')
-    {
+    public function readStringUTF16(
+        $byteCount,
+        $byteOrder = self::BYTE_ORDER_BIG_ENDIAN,
+        $characterSet = ''
+    ) {
         if ($byteCount == 0) {
             return '';
         }

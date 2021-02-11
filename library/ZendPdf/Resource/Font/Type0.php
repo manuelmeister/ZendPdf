@@ -80,7 +80,7 @@ class Type0 extends AbstractFont
              . 'CMapName currentdict /CMap defineresource pop '     . "\n"
              . 'end '
              . 'end ';
-            }
+    }
 
     /**
      * Object constructor
@@ -121,7 +121,6 @@ class Type0 extends AbstractFont
 
         $toUnicode = $this->_objectFactory->newStreamObject(self::getToUnicodeCMapData());
         $this->_resource->ToUnicode = $toUnicode;
-
     }
 
     /**
@@ -233,7 +232,7 @@ class Type0 extends AbstractFont
      * @param string $charEncoding Character encoding of resulting text.
      * @return string
      */
-        public function decodeString($string, $charEncoding)
+    public function decodeString($string, $charEncoding)
     {
         return iconv('UTF-16BE', $charEncoding, $string);
     }

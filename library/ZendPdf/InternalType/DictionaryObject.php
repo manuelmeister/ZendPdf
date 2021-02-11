@@ -111,10 +111,11 @@ class DictionaryObject extends AbstractTypeObject
     
     /**
      * Delete the specified key
-     * 
+     *
      * @param string $item
      */
-    public function __unset($item) {
+    public function __unset($item)
+    {
         unset($this->_items[$item]);
     }
 
@@ -144,7 +145,7 @@ class DictionaryObject extends AbstractTypeObject
                 throw new Exception\RuntimeException('Wrong data');
             }
 
-            if (strlen($outStr) - $lastNL > 128)  {
+            if (strlen($outStr) - $lastNL > 128) {
                 $outStr .= "\n";
                 $lastNL = strlen($outStr);
             }

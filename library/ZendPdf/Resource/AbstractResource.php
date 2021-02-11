@@ -81,9 +81,11 @@ abstract class AbstractResource
         // results of clonePage() operation (other resources are still shared)
         $dictionary = new InternalType\DictionaryObject();
         foreach ($this->_pageDictionary->getKeys() as $key) {
-            $dictionary->$key = $this->_pageDictionary->$key->makeClone($factory,
-                                                                        $processed,
-                                                                        InternalType\AbstractTypeObject::CLONE_MODE_SKIP_PAGES);
+            $dictionary->$key = $this->_pageDictionary->$key->makeClone(
+                $factory,
+                $processed,
+                InternalType\AbstractTypeObject::CLONE_MODE_SKIP_PAGES
+            );
         }
 
         $this->_pageDictionary = $factory->newObject($dictionary);
@@ -109,9 +111,11 @@ abstract class AbstractResource
         // results of clonePage() operation (other resources are still shared)
         $dictionary = new InternalType\DictionaryObject();
         foreach ($this->_pageDictionary->getKeys() as $key) {
-            $dictionary->$key = $this->_pageDictionary->$key->makeClone($factory,
-                                                                        $processed,
-                                                                        InternalType\AbstractTypeObject::CLONE_MODE_SKIP_PAGES);
+            $dictionary->$key = $this->_pageDictionary->$key->makeClone(
+                $factory,
+                $processed,
+                InternalType\AbstractTypeObject::CLONE_MODE_SKIP_PAGES
+            );
         }
 
         $clonedPage = new Pdf\Page($factory->newObject($dictionary), $factory);

@@ -225,12 +225,13 @@ class Created extends AbstractOutline
      * @return \ZendPdf\InternalType\AbstractTypeObject
      * @throws \ZendPdf\Exception\ExceptionInterface
      */
-    public function dumpOutline(ObjectFactory $factory,
-                                              $updateNavigation,
-              InternalType\AbstractTypeObject $parent,
-              InternalType\AbstractTypeObject $prev = null,
-                            \SplObjectStorage $processedOutlines = null)
-    {
+    public function dumpOutline(
+        ObjectFactory $factory,
+        $updateNavigation,
+        InternalType\AbstractTypeObject $parent,
+        InternalType\AbstractTypeObject $prev = null,
+        \SplObjectStorage $processedOutlines = null
+    ) {
         if ($processedOutlines === null) {
             $processedOutlines = new \SplObjectStorage();
         }

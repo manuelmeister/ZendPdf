@@ -204,7 +204,7 @@ abstract class AbstractAnnotation
             $this->_annotationDictionary->Rect->items[0]->getType() != InternalType\AbstractTypeObject::TYPE_NUMERIC ||
             $this->_annotationDictionary->Rect->items[1]->getType() != InternalType\AbstractTypeObject::TYPE_NUMERIC ||
             $this->_annotationDictionary->Rect->items[2]->getType() != InternalType\AbstractTypeObject::TYPE_NUMERIC ||
-            $this->_annotationDictionary->Rect->items[3]->getType() != InternalType\AbstractTypeObject::TYPE_NUMERIC ) {
+            $this->_annotationDictionary->Rect->items[3]->getType() != InternalType\AbstractTypeObject::TYPE_NUMERIC) {
             throw new Exception\CorruptedPdfException('\'Rect\' dictionary entry must be an array of four numeric elements.');
         }
     }

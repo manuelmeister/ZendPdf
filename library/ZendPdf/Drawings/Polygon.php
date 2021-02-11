@@ -25,11 +25,11 @@ class Polygon extends ShapeAbstract
     protected $yCoordinates;
 
     public function __construct(
-                                array $xCoordinates,
-                                array $yCoordinates,
-                                $fillType = self::DRAW_FILL_AND_STROKE,
-                                $fillMethod = self::FILL_METHOD_NON_ZERO_WINDING)
-    {
+        array $xCoordinates,
+        array $yCoordinates,
+        $fillType = self::DRAW_FILL_AND_STROKE,
+        $fillMethod = self::FILL_METHOD_NON_ZERO_WINDING
+    ) {
         $this->xCoordinates = $xCoordinates;
         $this->yCoordinates = $yCoordinates;
         $this->fillType = $fillType;

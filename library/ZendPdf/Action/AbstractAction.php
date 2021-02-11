@@ -212,7 +212,7 @@ abstract class AbstractAction extends Pdf\InternalStructure\NavigationTarget imp
         if (count($this->_originalNextList) != count($this->next)) {
             // If original and current children arrays have different size then children list was updated
             $childListUpdated = true;
-        } elseif ( !(array_keys($this->_originalNextList) === array_keys($this->next)) ) {
+        } elseif (!(array_keys($this->_originalNextList) === array_keys($this->next))) {
             // If original and current children arrays have different keys (with a glance to an order) then children list was updated
             $childListUpdated = true;
         } else {
@@ -239,7 +239,6 @@ abstract class AbstractAction extends Pdf\InternalStructure\NavigationTarget imp
                 default:
                     $pdfChildArray = new InternalType\ArrayObject();
                     foreach ($this->next as $child) {
-
                         $pdfChildArray->items[] = $child->dumpAction($factory, $processedActions);
                     }
                     $this->_actionDictionary->Next = $pdfChildArray;

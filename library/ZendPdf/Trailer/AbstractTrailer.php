@@ -39,7 +39,7 @@ abstract class AbstractTrailer
      */
     private function _checkDictKey($key)
     {
-        if ( !in_array($key, self::$_allowedKeys) ) {
+        if (!in_array($key, self::$_allowedKeys)) {
             /** @todo Make warning (log entry) instead of an exception */
             throw new Exception\CorruptedPdfException("Unknown trailer dictionary key: '$key'.");
         }

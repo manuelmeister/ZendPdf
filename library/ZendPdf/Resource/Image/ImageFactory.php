@@ -26,7 +26,7 @@ class ImageFactory
 {
     public static function factory($filename)
     {
-        if(!is_file($filename)) {
+        if (!is_file($filename)) {
             throw new Exception\IOException("Cannot create image resource. File not found.");
         }
         $extension = pathinfo($filename, PATHINFO_EXTENSION);

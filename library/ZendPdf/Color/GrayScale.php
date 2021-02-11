@@ -36,8 +36,12 @@ class GrayScale implements ColorInterface
      */
     public function __construct($grayLevel)
     {
-        if ($grayLevel < 0) { $grayLevel = 0; }
-        if ($grayLevel > 1) { $grayLevel = 1; }
+        if ($grayLevel < 0) {
+            $grayLevel = 0;
+        }
+        if ($grayLevel > 1) {
+            $grayLevel = 1;
+        }
 
         $this->_grayLevel = new InternalType\NumericObject($grayLevel);
     }

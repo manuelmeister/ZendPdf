@@ -49,26 +49,26 @@ class ArrayObject extends AbstractTypeObject
                 }
                 $this->items[] = $element;
             }
-        } elseif ($val !== null){
+        } elseif ($val !== null) {
             throw new Exception\RuntimeException('Argument must be an array');
         }
     }
 
-	/**
-	 * Add an element to the array.
-	 *
-	 * @param AbstractTypeObject $value - Element to add to the array.
-	 *
-	 * @throws \ZendPdf\Exception\ExceptionInterface
-	 */
-	public function add( $value )
-	{
-		if ($value instanceof AbstractTypeObject) {
-			$this->items[] = $value;
-		} else {
-			throw new Exception\RuntimeException('Array elements must be \ZendPdf\InternalType\AbstractTypeObject objects.');
-		}
-	}
+    /**
+     * Add an element to the array.
+     *
+     * @param AbstractTypeObject $value - Element to add to the array.
+     *
+     * @throws \ZendPdf\Exception\ExceptionInterface
+     */
+    public function add($value)
+    {
+        if ($value instanceof AbstractTypeObject) {
+            $this->items[] = $value;
+        } else {
+            throw new Exception\RuntimeException('Array elements must be \ZendPdf\InternalType\AbstractTypeObject objects.');
+        }
+    }
 
     /**
      * Getter
@@ -117,7 +117,7 @@ class ArrayObject extends AbstractTypeObject
         $lastNL = 0;
 
         foreach ($this->items as $element) {
-            if (strlen($outStr) - $lastNL > 128)  {
+            if (strlen($outStr) - $lastNL > 128) {
                 $outStr .= "\n";
                 $lastNL = strlen($outStr);
             }
