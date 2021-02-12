@@ -15,3 +15,5 @@ composer require "mentax/zendpdf": "^2.1.0"
 
 At that point, follow the instructions in the documentation folder for actual
 usage of the component.
+
+Or old not full compatible documentation from https://framework.zend.com/manual/1.12/en/zend.pdf.html

@@ -164,7 +164,7 @@ class ActionTest extends \PHPUnit_Framework_TestCase
 
         $actionsCount = 0;
         $iterator = new \RecursiveIteratorIterator(
-            new Util\RecursivelyIteratableObjectsContainer(array($action)),
+            new Util\RecursivelyIterableObjectsContainer(array($action)),
             \RecursiveIteratorIterator::SELF_FIRST
         );
         foreach ($iterator as $chainedAction) {
@@ -299,7 +299,7 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         }
         $actionsCount = 0;
         $iterator = new \RecursiveIteratorIterator(
-            new Util\RecursivelyIteratableObjectsContainer(array($action)),
+            new Util\RecursivelyIterableObjectsContainer(array($action)),
             \RecursiveIteratorIterator::SELF_FIRST
         );
         foreach ($iterator as $chainedAction) {

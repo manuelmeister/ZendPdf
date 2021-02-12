@@ -11,7 +11,7 @@ before_install:
 
 script:
  - ./vendor/bin/phpunit -c ./tests/
- - ./vendor/bin/php-cs-fixer fix -v --diff --dry-run --show-progress=none .
+ - ./vendor/bin/php-cs-fixer fix --rules=@PSR2 -v --diff --dry-run --show-progress=none .
  
 cache:
   directories:

@@ -14,7 +14,6 @@ use Zend\Memory;
 use ZendPdf\Exception;
 use ZendPdf\InternalType\AcroFormObject;
 use ZendPdf\InternalType\IndirectObjectReference;
-use ZendPdf\Page;
 
 /**
  * General entity which describes PDF document.
@@ -701,7 +700,7 @@ class PdfDocument
         }
 
         // Refresh outlines
-        $iterator = new \RecursiveIteratorIterator(new Util\RecursivelyIteratableObjectsContainer($this->outlines), \RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new \RecursiveIteratorIterator(new Util\RecursivelyIterableObjectsContainer($this->outlines), \RecursiveIteratorIterator::SELF_FIRST);
         foreach ($iterator as $outline) {
             $target = $outline->getTarget();
 
