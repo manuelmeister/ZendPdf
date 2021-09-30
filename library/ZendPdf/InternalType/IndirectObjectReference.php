@@ -75,7 +75,7 @@ class IndirectObjectReference extends AbstractTypeObject
      */
     public function __construct(
         $objNum,
-        $genNum = 0,
+        $genNum,
         $context,
         Pdf\ObjectFactory $factory
     ) {
